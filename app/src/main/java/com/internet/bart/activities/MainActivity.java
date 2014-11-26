@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,12 @@ import android.view.ViewGroup;
 import android.os.Build;
 
 import com.internet.bart.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 
 public class MainActivity extends Activity {
@@ -25,6 +32,18 @@ public class MainActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("OwnedItem");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> ownedItemsList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + ownedItemsList.size() + " scores");
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+
     }
 
 
