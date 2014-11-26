@@ -11,12 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ListView;
 
 import com.internet.bart.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 
 import java.util.List;
 
@@ -71,6 +73,9 @@ public class MainActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        ParseQueryAdapter<ParseObject> availableItemsAdapter;
+
+
         public PlaceholderFragment() {
         }
 
@@ -79,6 +84,18 @@ public class MainActivity extends Activity {
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
+        }
+
+        @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+
+            availableItemsAdapter = new ParseQueryAdapter<ParseObject>(getActivity(), "OwnedItem");
+            availableItemsAdapter.setTextKey("name");
+
+            ListView availableItemsListView = (ListView) getActivity().findViewById(R.id.available_items_listview);
+            availableItemsListView.setAdapter(availableItemsAdapter);
+
         }
     }
 }
