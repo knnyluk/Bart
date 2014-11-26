@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.internet.bart.R;
 import com.parse.FindCallback;
@@ -90,8 +91,28 @@ public class MainActivity extends Activity {
         public void onViewCreated(View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
 
-            availableItemsAdapter = new ParseQueryAdapter<ParseObject>(getActivity(), "OwnedItem");
-            availableItemsAdapter.setTextKey("name");
+            availableItemsAdapter = new ParseQueryAdapter<ParseObject>(getActivity(), "OwnedItem") {
+                @Override
+                public View getItemView(ParseObject object, View v, ViewGroup parent) {
+                    if (v == null) {
+                        v = View.inflate(getContext(), R.layout.listitem_available_item, null);
+                    }
+
+                    // Take advantage of ParseQueryAdapter's getItemView logic for
+                    // populating the main TextView/ImageView.
+                    // The IDs in your custom layout must match what ParseQueryAdapter expects
+                    // if it will be populating a TextView or ImageView for you.
+                    super.getItemView(object, v, parent);
+
+                    // Do additional configuration before returning the View.
+                    TextView itemNameTextView = (TextView) v.findViewById(R.id.itemNametextView);
+                    itemNameTextView.setText(object.getString("name"));
+
+                    TextView itemDescriptionTextView = (TextView) v.findViewById(R.id.itemDescriptionTextView);
+                    itemDescriptionTextView.setText("Condition: " + object.getString("description"));
+                    return v;
+                }
+            };
 
             ListView availableItemsListView = (ListView) getActivity().findViewById(R.id.available_items_listview);
             availableItemsListView.setAdapter(availableItemsAdapter);
