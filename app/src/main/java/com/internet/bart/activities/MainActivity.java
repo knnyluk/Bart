@@ -15,17 +15,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.internet.bart.R;
 import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
+import com.internet.bart.models.AvailableItem;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -79,7 +88,7 @@ public class MainActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment implements ParseApiCallback {
 
-        ParseQueryAdapter<ParseObject> availableItemsAdapter;
+        
 
 
         public PlaceholderFragment() {
@@ -127,8 +136,18 @@ public class MainActivity extends Activity {
         }
 
         @Override
-        public void onSuccess(JSONObject response) {
+        public void onSuccess(String response) {
             if (isAdded()) {
+                JsonParser parser = new JsonParser();
+                JsonObject jsonObject = (JsonObject)parser.parse(response);
+                JsonArray jsonArray = jsonObject.getAsJsonArray("results");
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
+                System.out.println(gson.fromJson(jsonArray,listType));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                List<AvailableItem> availableItems = AvailableItem.fromJSONArray()
 //                List<RedditEntry> redditEntries = RedditEntry.parseJSONObject(response);
 //                subredditListAdapter.clear();
 //                subredditListAdapter.addAll(redditEntries);
@@ -139,6 +158,7 @@ public class MainActivity extends Activity {
         public void onError() {
             if (isAdded()) {
 //                Toast.makeText(getActivity(), "Error loading Subreddit list", Toast.LENGTH_SHORT).show();
+                System.out.println("callback error");
             }
         }
     }

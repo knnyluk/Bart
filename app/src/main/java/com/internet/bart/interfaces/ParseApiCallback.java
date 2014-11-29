@@ -7,7 +7,7 @@ import org.json.JSONObject;
  */
 public interface ParseApiCallback {
 
-    public void onSuccess(JSONObject response);
+    public void onSuccess(String response);
     public void onError();
 
 }

@@ -35,7 +35,7 @@ public class ParseRestApi {
         new loadDataInBackground(parseApiCallback).execute(getAvailableItemsUri());
     }
 
-    private JSONObject getJSONObjectFromUri(Uri uri) throws IOException, JSONException {
+    private String getJSONObjectFromUri(Uri uri) throws IOException, JSONException {
         URLConnection httpUrlConnection = new URL(uri.toString()).openConnection();
         httpUrlConnection.setRequestProperty(APPLICATION_ID_HEADER_KEY, APPLICATION_ID);
         httpUrlConnection.setRequestProperty(REST_API_HEADER_KEY, REST_API_KEY);
@@ -51,7 +51,7 @@ public class ParseRestApi {
         }
         bufferedInputStream.close();
 
-        return new JSONObject(stringBuilder.toString());
+        return stringBuilder.toString();
 
     }
 
@@ -66,7 +66,7 @@ public class ParseRestApi {
         return uri;
     }
 
-    public class loadDataInBackground extends AsyncTask<Uri, Void, JSONObject> {
+    public class loadDataInBackground extends AsyncTask<Uri, Void, String> {
 
         ParseApiCallback parseApiCallback;
 
@@ -75,9 +75,8 @@ public class ParseRestApi {
         }
 
         @Override
-        protected JSONObject doInBackground(Uri... uris) {
+        protected String doInBackground(Uri... uris) {
             try {
-                System.out.println(getJSONObjectFromUri(uris[0]));
                 return getJSONObjectFromUri(uris[0]);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -88,13 +87,13 @@ public class ParseRestApi {
             }
         }
 
-//        @Override
-//        protected void onPostExecute(JSONObject result) {
-//            if (result != null) {
-//                this.redditApiCallback.onSuccess(result);
-//            } else {
-//                this.redditApiCallback.onError();
-//            }
-//        }
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                this.parseApiCallback.onSuccess(result);
+            } else {
+                this.parseApiCallback.onError();
+            }
+        }
     }
 }
