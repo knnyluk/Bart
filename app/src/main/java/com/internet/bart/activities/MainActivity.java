@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.internet.bart.R;
+import com.internet.bart.adapters.AvailableItemsAdapter;
 import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
 import com.internet.bart.models.AvailableItem;
@@ -88,8 +89,7 @@ public class MainActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment implements ParseApiCallback {
 
-        
-
+        AvailableItemsAdapter availableItemsAdapter;
 
         public PlaceholderFragment() {
         }
@@ -132,6 +132,10 @@ public class MainActivity extends Activity {
 //            availableItemsListView.setAdapter(availableItemsAdapter);
             ParseRestApi parseRestApi = new ParseRestApi();
             parseRestApi.getAvailableItems(this);
+            availableItemsAdapter = new AvailableItemsAdapter(getActivity());
+            ListView availableItemsListView = (ListView)getActivity().findViewById(R.id.available_items_listview);
+            availableItemsListView.setAdapter(availableItemsAdapter);
+
 
         }
 
@@ -143,14 +147,10 @@ public class MainActivity extends Activity {
                 JsonArray jsonArray = jsonObject.getAsJsonArray("results");
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
-                System.out.println(gson.fromJson(jsonArray,listType));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                List<AvailableItem> availableItems = AvailableItem.fromJSONArray()
-//                List<RedditEntry> redditEntries = RedditEntry.parseJSONObject(response);
-//                subredditListAdapter.clear();
-//                subredditListAdapter.addAll(redditEntries);
+                System.out.println(gson.fromJson(jsonArray, listType));
+                List<AvailableItem> availableItemList = gson.fromJson(jsonArray,listType);
+                availableItemsAdapter.addAll(availableItemList);
+                availableItemsAdapter.notifyDataSetChanged();
             }
         }
 

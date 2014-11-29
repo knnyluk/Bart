@@ -16,4 +16,11 @@ public class AvailableItem {
 //
 //    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
