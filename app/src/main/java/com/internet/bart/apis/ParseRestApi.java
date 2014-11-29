@@ -3,6 +3,8 @@ package com.internet.bart.apis;
 import android.net.Uri;
 import android.os.AsyncTask;
 
+import com.internet.bart.interfaces.ParseApiCallback;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,52 +21,38 @@ import java.net.URLConnection;
 public class ParseRestApi {
 
     private static final String APPLICATION_ID_HEADER_KEY = "X-Parse-Application-Id";
-    private static final String REST_API_HEADER_KEY = "X-Parse-REST-API-Key";
     private static final String APPLICATION_ID = "OKUvImY1fCkgxWgKbzIoy0qm2EYJXY1VYqMTRdeY";
+    private static final String REST_API_HEADER_KEY = "X-Parse-REST-API-Key";
     private static final String REST_API_KEY = "IqS68IyWoDaHjeVnLW71exFQ4YLuZcQGXnCJf9YZ";
+
+    private static final String ROOT_URL = "api.parse.com";
     private static final String API_VERSION = "1";
     private static final String CLASSES_PATH = "classes";
     private static final String OWNED_ITEM_CLASSNAME = "OwnedItem";
-    private static final String ROOT_URL = "api.parse.com";
-//    private String getRootURL() {
-//        return APPLICATION_ID + "\u003A" + "javascript-key" + "\u003D" + JAVASCRIPT_API_KEY + "@api.parse.com";
-//    }
 
-    public JSONObject getAvailableItemsJSON() {
-        return getJSONObjectFromUri(getAvailableItemsUri());
+
+    public void getAvailableItems(ParseApiCallback parseApiCallback) {
+        new loadDataInBackground(parseApiCallback).execute(getAvailableItemsUri());
     }
 
-    public void testMethod() {
-        new getAvailableItemsAsync().execute(getAvailableItemsUri());
-    }
+    private JSONObject getJSONObjectFromUri(Uri uri) throws IOException, JSONException {
+        URLConnection httpUrlConnection = new URL(uri.toString()).openConnection();
+        httpUrlConnection.setRequestProperty(APPLICATION_ID_HEADER_KEY, APPLICATION_ID);
+        httpUrlConnection.setRequestProperty(REST_API_HEADER_KEY, REST_API_KEY);
 
-    private JSONObject getJSONObjectFromUri(Uri uri) {
+        InputStream inputStream = httpUrlConnection.getInputStream();
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
 
-        StringBuilder stringBuilder = null;
+        int bytesRead;
+        StringBuilder stringBuilder = new StringBuilder();
 
-        try {
-            URLConnection httpUrlConnection = new URL("https://api.parse.com/1/classes/OwnedItem?order=-name").openConnection();
-            httpUrlConnection.setRequestProperty(APPLICATION_ID_HEADER_KEY, APPLICATION_ID);
-            httpUrlConnection.setRequestProperty(REST_API_HEADER_KEY, REST_API_KEY);
-            InputStream inputStream = httpUrlConnection.getInputStream();
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-
-            int bytesRead;
-            stringBuilder = new StringBuilder();
-
-            while ((bytesRead = bufferedInputStream.read()) != -1) {
-                stringBuilder.append((char)bytesRead);
-            }
-            System.out.println("sout is working");
-            System.out.println(new JSONObject(stringBuilder.toString()));
-            return new JSONObject(stringBuilder.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        while ((bytesRead = bufferedInputStream.read()) != -1) {
+            stringBuilder.append((char)bytesRead);
         }
+        bufferedInputStream.close();
 
-        return null;
+        return new JSONObject(stringBuilder.toString());
+
     }
 
     private Uri getAvailableItemsUri() {
@@ -78,12 +66,35 @@ public class ParseRestApi {
         return uri;
     }
 
-    public class getAvailableItemsAsync extends AsyncTask<Uri, Void, Void> {
+    public class loadDataInBackground extends AsyncTask<Uri, Void, JSONObject> {
+
+        ParseApiCallback parseApiCallback;
+
+        private loadDataInBackground(ParseApiCallback parseApiCallback) {
+            this.parseApiCallback = parseApiCallback;
+        }
 
         @Override
-        protected Void doInBackground(Uri... uris) {
-            getJSONObjectFromUri(uris[0]);
-            return null;
+        protected JSONObject doInBackground(Uri... uris) {
+            try {
+                System.out.println(getJSONObjectFromUri(uris[0]));
+                return getJSONObjectFromUri(uris[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
+
+//        @Override
+//        protected void onPostExecute(JSONObject result) {
+//            if (result != null) {
+//                this.redditApiCallback.onSuccess(result);
+//            } else {
+//                this.redditApiCallback.onError();
+//            }
+//        }
     }
 }

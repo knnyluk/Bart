@@ -13,14 +13,18 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.internet.bart.R;
 import com.internet.bart.apis.ParseRestApi;
+import com.internet.bart.interfaces.ParseApiCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -37,16 +41,16 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("OwnedItem");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> ownedItemsList, ParseException e) {
-                if (e == null) {
-                    Log.d("score", "Retrieved " + ownedItemsList.size() + " scores");
-                } else {
-                    Log.d("score", "Error: " + e.getMessage());
-                }
-            }
-        });
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery("OwnedItem");
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            public void done(List<ParseObject> ownedItemsList, ParseException e) {
+//                if (e == null) {
+//                    Log.d("score", "Retrieved " + ownedItemsList.size() + " scores");
+//                } else {
+//                    Log.d("score", "Error: " + e.getMessage());
+//                }
+//            }
+//        });
 
     }
 
@@ -73,7 +77,7 @@ public class MainActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements ParseApiCallback {
 
         ParseQueryAdapter<ParseObject> availableItemsAdapter;
 
@@ -118,8 +122,24 @@ public class MainActivity extends Activity {
 //            ListView availableItemsListView = (ListView) getActivity().findViewById(R.id.available_items_listview);
 //            availableItemsListView.setAdapter(availableItemsAdapter);
             ParseRestApi parseRestApi = new ParseRestApi();
-            parseRestApi.testMethod();
+            parseRestApi.getAvailableItems(this);
 
+        }
+
+        @Override
+        public void onSuccess(JSONObject response) {
+            if (isAdded()) {
+//                List<RedditEntry> redditEntries = RedditEntry.parseJSONObject(response);
+//                subredditListAdapter.clear();
+//                subredditListAdapter.addAll(redditEntries);
+            }
+        }
+
+        @Override
+        public void onError() {
+            if (isAdded()) {
+//                Toast.makeText(getActivity(), "Error loading Subreddit list", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
