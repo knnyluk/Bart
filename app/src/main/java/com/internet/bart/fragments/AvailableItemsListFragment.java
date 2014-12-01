@@ -6,19 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.internet.bart.R;
 import com.internet.bart.adapters.AvailableItemsAdapter;
 import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
 import com.internet.bart.models.AvailableItem;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -26,7 +21,7 @@ import java.util.List;
  */
 public class AvailableItemsListFragment extends Fragment implements ParseApiCallback {
 
-    AvailableItemsAdapter availableItemsAdapter;
+    private AvailableItemsAdapter availableItemsAdapter;
 
     public AvailableItemsListFragment() {
     }
@@ -60,8 +55,7 @@ public class AvailableItemsListFragment extends Fragment implements ParseApiCall
     @Override
     public void onError() {
         if (isAdded()) {
-//                Toast.makeText(getActivity(), "Error loading Subreddit list", Toast.LENGTH_SHORT).show();
-            System.out.println("callback error");
+                Toast.makeText(getActivity(), "Sorry, there was trouble fetching the available items", Toast.LENGTH_SHORT).show();
         }
     }
 }
