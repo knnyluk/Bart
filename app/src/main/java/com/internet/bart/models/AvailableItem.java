@@ -1,5 +1,8 @@
 package com.internet.bart.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,7 +15,7 @@ import java.util.List;
 /**
  * Created on 11/28/14.
  */
-public class AvailableItem {
+public class AvailableItem implements Parcelable {
     private String objectId, name, title;
 //    private Date createdAt, updatedAt;
 
@@ -32,4 +35,32 @@ public class AvailableItem {
     public String getTitle() {
         return title;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.objectId);
+        dest.writeString(this.name);
+        dest.writeString(this.title);
+    }
+
+    private AvailableItem(Parcel in) {
+        this.objectId = in.readString();
+        this.name = in.readString();
+        this.title = in.readString();
+    }
+
+    public static final Creator<AvailableItem> CREATOR = new Creator<AvailableItem>() {
+        public AvailableItem createFromParcel(Parcel source) {
+            return new AvailableItem(source);
+        }
+
+        public AvailableItem[] newArray(int size) {
+            return new AvailableItem[size];
+        }
+    };
 }

@@ -1,15 +1,18 @@
 package com.internet.bart.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.internet.bart.R;
 import com.internet.bart.fragments.AvailableItemsListFragment;
+import com.internet.bart.interfaces.FragmentController;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements FragmentController {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +21,7 @@ public class MainActivity extends Activity {
         AvailableItemsListFragment availableItemsListFragment = new AvailableItemsListFragment();
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, availableItemsListFragment)
+                    .add(R.id.fragmentcontainer, availableItemsListFragment)
                     .commit();
         }
     }
@@ -42,4 +45,15 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void changeFragment(Fragment fragment, boolean addToBackstack) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+        if (addToBackstack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+
+        fragmentTransaction.replace(R.id.fragmentcontainer, fragment);
+        fragmentTransaction.commit();
+    }
 }

@@ -1,17 +1,14 @@
 package com.internet.bart.fragments;
 
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.internet.bart.R;
 import com.internet.bart.adapters.AvailableItemsAdapter;
 import com.internet.bart.apis.ParseRestApi;
+import com.internet.bart.interfaces.FragmentController;
 import com.internet.bart.interfaces.ParseApiCallback;
 import com.internet.bart.models.AvailableItem;
 
@@ -24,20 +21,28 @@ public class AvailableItemsListFragment extends ListFragment implements ParseApi
 
     private AvailableItemsAdapter availableItemsAdapter;
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        View rootView = inflater.inflate(R.layout.fragment_available_items_list, container, false);
-//        return rootView;
-//    }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ParseRestApi.getParseRestApi().getAvailableItems(this);
         availableItemsAdapter = new AvailableItemsAdapter(getActivity());
-//        ListView availableItemsListView = (ListView)getActivity().findViewById(R.id.available_items_listview);
         setListAdapter(availableItemsAdapter);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        if (getActivity() instanceof FragmentController) {
+
+            AvailableItem availableItem = (AvailableItem) l.getAdapter().getItem(position);
+            AvailableItemDetailFragment availableItemDetailFragment = new AvailableItemDetailFragment();
+
+            FragmentController fragmentController = (FragmentController) getActivity();
+            fragmentController.changeFragment(availableItemDetailFragment, true);
+
+        } else {
+            throw new IllegalArgumentException("Your activity must implement the FragmentController interface");
+        }
     }
 
     @Override
