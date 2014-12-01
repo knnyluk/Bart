@@ -26,6 +26,7 @@
         android:layout_margin="10dp"
         tools:text="Lorem ipsum dolor sit amet, vis id dolor quaerendum reformidans, ut vis invidunt probatus disputationi, mel et doctus voluptua. Dolore utamur platonem an ius. Has ullum appellantur cu, eum quod cotidieque te, movet oporteat tincidunt vix at. Ius noster ocurreret democritum in, cu ipsum tantas salutatus vis. Ullum integre tacimates ei per, mei eruditi voluptatibus ei. Suscipit officiis pericula no eum. Usu quot oratio ut, cibo brute ad duo."/>
     <Button
+        android:id="@+id/propose_trade_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_propose_trade_text"

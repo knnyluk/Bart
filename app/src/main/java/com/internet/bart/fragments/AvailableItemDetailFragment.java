@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.internet.bart.R;
@@ -13,10 +14,9 @@ import com.internet.bart.models.AvailableItem;
 /**
  * Created on 12/1/14.
  */
-public class AvailableItemDetailFragment extends Fragment {
+public class AvailableItemDetailFragment extends Fragment implements View.OnClickListener {
 
     public static final String ARG_AVAILABLE_ITEM = "arg_available_item";
-
     private TextView nameTextView, titleTextView, descriptionTextView;
 
     public static AvailableItemDetailFragment newInstance(AvailableItem availableItem) {
@@ -49,6 +49,9 @@ public class AvailableItemDetailFragment extends Fragment {
 
         AvailableItem clickedAvailableItem = getArguments().getParcelable(ARG_AVAILABLE_ITEM);
 
+        Button proposeTradeButton = (Button) getActivity().findViewById(R.id.propose_trade_button);
+        proposeTradeButton.setOnClickListener(this);
+
         if (clickedAvailableItem != null) {
 
             nameTextView.setText(clickedAvailableItem.getName());
@@ -59,5 +62,13 @@ public class AvailableItemDetailFragment extends Fragment {
             throw new IllegalStateException("Must supply a AvailableItem to AvailableItemDetailFragment");
         }
 
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.propose_trade_button) {
+            System.out.println("Someone wants to propose a trade");
+        }
     }
 }
