@@ -30,9 +30,18 @@ public class ParseRestApi {
     private static final String CLASSES_PATH = "classes";
     private static final String OWNED_ITEM_CLASSNAME = "OwnedItem";
 
+    private static ParseRestApi parseRestApi;
+
+    public static ParseRestApi getParseRestApi() {
+        if (parseRestApi == null) {
+            parseRestApi = new ParseRestApi();
+        }
+
+        return parseRestApi;
+    }
 
     public void getAvailableItems(ParseApiCallback parseApiCallback) {
-        new loadDataInBackground(parseApiCallback).execute(getAvailableItemsUri());
+        new LoadDataInBackground(parseApiCallback).execute(getAvailableItemsUri());
     }
 
     private String getJSONObjectFromUri(Uri uri) throws IOException, JSONException {
@@ -67,11 +76,11 @@ public class ParseRestApi {
         return uri;
     }
 
-    public class loadDataInBackground extends AsyncTask<Uri, Void, String> {
+    public class LoadDataInBackground extends AsyncTask<Uri, Void, String> {
 
         ParseApiCallback parseApiCallback;
 
-        private loadDataInBackground(ParseApiCallback parseApiCallback) {
+        private LoadDataInBackground(ParseApiCallback parseApiCallback) {
             this.parseApiCallback = parseApiCallback;
         }
 
