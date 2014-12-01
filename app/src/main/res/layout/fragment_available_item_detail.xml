@@ -14,11 +14,13 @@
         android:layout_margin="10dp"
         tools:text="Item Name"/>
     <TextView
+        android:id="@+id/available_item_title_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         tools:text="This a a sample description"/>
     <TextView
+        android:id="@+id/available_item_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

@@ -16,7 +16,7 @@ import java.util.List;
  * Created on 11/28/14.
  */
 public class AvailableItem implements Parcelable {
-    private String objectId, name, title;
+    private String objectId, name, title, fullDescription;
 //    private Date createdAt, updatedAt;
 
     public static List<AvailableItem> fromJSONString(String jsonString) {
@@ -36,6 +36,10 @@ public class AvailableItem implements Parcelable {
         return title;
     }
 
+    public String getFullDescription() {
+        return fullDescription;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -46,12 +50,17 @@ public class AvailableItem implements Parcelable {
         dest.writeString(this.objectId);
         dest.writeString(this.name);
         dest.writeString(this.title);
+        dest.writeString(this.fullDescription);
+    }
+
+    public AvailableItem() {
     }
 
     private AvailableItem(Parcel in) {
         this.objectId = in.readString();
         this.name = in.readString();
         this.title = in.readString();
+        this.fullDescription = in.readString();
     }
 
     public static final Creator<AvailableItem> CREATOR = new Creator<AvailableItem>() {

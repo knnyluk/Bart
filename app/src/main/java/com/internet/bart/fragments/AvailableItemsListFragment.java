@@ -35,7 +35,7 @@ public class AvailableItemsListFragment extends ListFragment implements ParseApi
         if (getActivity() instanceof FragmentController) {
 
             AvailableItem availableItem = (AvailableItem) l.getAdapter().getItem(position);
-            AvailableItemDetailFragment availableItemDetailFragment = new AvailableItemDetailFragment();
+            AvailableItemDetailFragment availableItemDetailFragment = AvailableItemDetailFragment.newInstance(availableItem);
 
             FragmentController fragmentController = (FragmentController) getActivity();
             fragmentController.changeFragment(availableItemDetailFragment, true);
