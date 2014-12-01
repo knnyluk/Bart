@@ -29,7 +29,7 @@ public class AvailableItemsListFragment extends Fragment implements ParseApiCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_available_items_list, container, false);
         return rootView;
     }
 
