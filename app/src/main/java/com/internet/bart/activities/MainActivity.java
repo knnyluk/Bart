@@ -42,18 +42,6 @@ public class MainActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("OwnedItem");
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            public void done(List<ParseObject> ownedItemsList, ParseException e) {
-//                if (e == null) {
-//                    Log.d("score", "Retrieved " + ownedItemsList.size() + " scores");
-//                } else {
-//                    Log.d("score", "Error: " + e.getMessage());
-//                }
-//            }
-//        });
-
     }
 
 
