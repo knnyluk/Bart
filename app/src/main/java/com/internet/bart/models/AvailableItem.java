@@ -18,11 +18,11 @@ public class AvailableItem {
 
     public static List<AvailableItem> fromJSONString(String jsonString) {
         JsonParser parser = new JsonParser();
-        JsonObject jsonObject = (JsonObject)parser.parse(jsonString);
-        JsonArray jsonArray = jsonObject.getAsJsonArray("results");
+        JsonObject rawJsonObject = (JsonObject)parser.parse(jsonString);
+        JsonArray jsonArrayOfAvailableItems = rawJsonObject.getAsJsonArray("results");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
-        return gson.fromJson(jsonArray,listType);
+        return gson.fromJson(jsonArrayOfAvailableItems,listType);
     }
 
     public String getName() {

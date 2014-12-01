@@ -44,7 +44,7 @@ public class ParseRestApi {
         new LoadDataInBackground(parseApiCallback).execute(getAvailableItemsUri());
     }
 
-    private String getJSONObjectFromUri(Uri uri) throws IOException, JSONException {
+    private String getJSONStringFromUri(Uri uri) throws IOException, JSONException {
         URLConnection httpUrlConnection = new URL(uri.toString()).openConnection();
         httpUrlConnection.setRequestProperty(APPLICATION_ID_HEADER_KEY, APPLICATION_ID);
         httpUrlConnection.setRequestProperty(REST_API_HEADER_KEY, REST_API_KEY);
@@ -87,7 +87,7 @@ public class ParseRestApi {
         @Override
         protected String doInBackground(Uri... uris) {
             try {
-                return getJSONObjectFromUri(uris[0]);
+                return getJSONStringFromUri(uris[0]);
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
