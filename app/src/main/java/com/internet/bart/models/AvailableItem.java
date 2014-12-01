@@ -9,7 +9,7 @@ import java.util.List;
  * Created on 11/28/14.
  */
 public class AvailableItem {
-    private String objectId, name, description;
+    private String objectId, name, title;
 //    private Date createdAt, updatedAt;
 
 //    public static List<AvailableItem> fromJSONArray(JSONArray jsonArray) {
@@ -20,7 +20,7 @@ public class AvailableItem {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 }

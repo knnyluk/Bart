@@ -10,9 +10,6 @@ import android.widget.TextView;
 import com.internet.bart.R;
 import com.internet.bart.models.AvailableItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created on 11/28/14.
  */
@@ -39,7 +36,7 @@ public class AvailableItemsAdapter extends ArrayAdapter<AvailableItem> {
         AvailableItem availableItem = getItem(position);
 
         viewHolder.itemNameTextView.setText(availableItem.getName());
-        viewHolder.itemDescriptionTextView.setText(availableItem.getDescription());
+        viewHolder.itemTitleTextView.setText(availableItem.getTitle());
 
         return convertView;
     }
@@ -47,11 +44,11 @@ public class AvailableItemsAdapter extends ArrayAdapter<AvailableItem> {
     private static class ViewHolder {
 
         private TextView itemNameTextView;
-        private TextView itemDescriptionTextView;
+        private TextView itemTitleTextView;
 
         public ViewHolder(View rootView) {
             this.itemNameTextView = (TextView) rootView.findViewById(R.id.itemNametextView);
-            this.itemDescriptionTextView = (TextView) rootView.findViewById(R.id.itemDescriptionTextView);
+            this.itemTitleTextView = (TextView) rootView.findViewById(R.id.itemTitleTextView);
         }
 
     }

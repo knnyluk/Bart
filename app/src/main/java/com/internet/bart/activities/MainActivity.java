@@ -25,14 +25,6 @@ import com.internet.bart.adapters.AvailableItemsAdapter;
 import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
 import com.internet.bart.models.AvailableItem;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-
-
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -104,39 +96,11 @@ public class MainActivity extends Activity {
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-
-//            availableItemsAdapter = new ParseQueryAdapter<ParseObject>(getActivity(), "OwnedItem") {
-//                @Override
-//                public View getItemView(ParseObject object, View v, ViewGroup parent) {
-//                    if (v == null) {
-//                        v = View.inflate(getContext(), R.layout.listitem_available_item, null);
-//                    }
-//
-//                    // Take advantage of ParseQueryAdapter's getItemView logic for
-//                    // populating the main TextView/ImageView.
-//                    // The IDs in your custom layout must match what ParseQueryAdapter expects
-//                    // if it will be populating a TextView or ImageView for you.
-//                    super.getItemView(object, v, parent);
-//
-//                    // Do additional configuration before returning the View.
-//                    TextView itemNameTextView = (TextView) v.findViewById(R.id.itemNametextView);
-//                    itemNameTextView.setText(object.getString("name"));
-//
-//                    TextView itemDescriptionTextView = (TextView) v.findViewById(R.id.itemDescriptionTextView);
-//                    itemDescriptionTextView.setText("Condition: " + object.getString("description"));
-//                    return v;
-//                }
-//            };
-
-//            ListView availableItemsListView = (ListView) getActivity().findViewById(R.id.available_items_listview);
-//            availableItemsListView.setAdapter(availableItemsAdapter);
             ParseRestApi parseRestApi = new ParseRestApi();
             parseRestApi.getAvailableItems(this);
             availableItemsAdapter = new AvailableItemsAdapter(getActivity());
             ListView availableItemsListView = (ListView)getActivity().findViewById(R.id.available_items_listview);
             availableItemsListView.setAdapter(availableItemsAdapter);
-
-
         }
 
         @Override
@@ -147,7 +111,6 @@ public class MainActivity extends Activity {
                 JsonArray jsonArray = jsonObject.getAsJsonArray("results");
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
-                System.out.println(gson.fromJson(jsonArray, listType));
                 List<AvailableItem> availableItemList = gson.fromJson(jsonArray,listType);
                 availableItemsAdapter.addAll(availableItemList);
                 availableItemsAdapter.notifyDataSetChanged();
