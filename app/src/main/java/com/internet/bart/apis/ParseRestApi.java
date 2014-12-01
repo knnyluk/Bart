@@ -62,6 +62,7 @@ public class ParseRestApi {
                 .appendPath(API_VERSION)
                 .appendPath(CLASSES_PATH)
                 .appendPath(OWNED_ITEM_CLASSNAME)
+                .appendQueryParameter("order", "-createdAt")
                 .build();
         return uri;
     }
