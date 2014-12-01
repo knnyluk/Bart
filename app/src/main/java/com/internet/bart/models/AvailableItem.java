@@ -1,8 +1,12 @@
 package com.internet.bart.models;
 
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.Date;
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -12,9 +16,14 @@ public class AvailableItem {
     private String objectId, name, title;
 //    private Date createdAt, updatedAt;
 
-//    public static List<AvailableItem> fromJSONArray(JSONArray jsonArray) {
-//
-//    }
+    public static List<AvailableItem> fromJSONString(String jsonString) {
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = (JsonObject)parser.parse(jsonString);
+        JsonArray jsonArray = jsonObject.getAsJsonArray("results");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
+        return gson.fromJson(jsonArray,listType);
+    }
 
     public String getName() {
         return name;

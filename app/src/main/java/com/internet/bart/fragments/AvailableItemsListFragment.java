@@ -51,12 +51,7 @@ public class AvailableItemsListFragment extends Fragment implements ParseApiCall
     @Override
     public void onSuccess(String response) {
         if (isAdded()) {
-            JsonParser parser = new JsonParser();
-            JsonObject jsonObject = (JsonObject)parser.parse(response);
-            JsonArray jsonArray = jsonObject.getAsJsonArray("results");
-            Gson gson = new Gson();
-            Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
-            List<AvailableItem> availableItemList = gson.fromJson(jsonArray,listType);
+            List<AvailableItem> availableItemList = AvailableItem.fromJSONString(response);
             availableItemsAdapter.addAll(availableItemList);
             availableItemsAdapter.notifyDataSetChanged();
         }
