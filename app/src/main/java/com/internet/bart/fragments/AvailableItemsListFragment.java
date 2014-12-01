@@ -1,6 +1,7 @@
 package com.internet.bart.fragments;
 
 import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,27 +20,24 @@ import java.util.List;
 /**
  * Created on 12/1/14.
  */
-public class AvailableItemsListFragment extends Fragment implements ParseApiCallback {
+public class AvailableItemsListFragment extends ListFragment implements ParseApiCallback {
 
     private AvailableItemsAdapter availableItemsAdapter;
 
-    public AvailableItemsListFragment() {
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_available_items_list, container, false);
-        return rootView;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        View rootView = inflater.inflate(R.layout.fragment_available_items_list, container, false);
+//        return rootView;
+//    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ParseRestApi.getParseRestApi().getAvailableItems(this);
         availableItemsAdapter = new AvailableItemsAdapter(getActivity());
-        ListView availableItemsListView = (ListView)getActivity().findViewById(R.id.available_items_listview);
-        availableItemsListView.setAdapter(availableItemsAdapter);
+//        ListView availableItemsListView = (ListView)getActivity().findViewById(R.id.available_items_listview);
+        setListAdapter(availableItemsAdapter);
     }
 
     @Override
