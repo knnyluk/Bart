@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Bart</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="button_propose_trade_text">Propose trade</string>
 </resources>
