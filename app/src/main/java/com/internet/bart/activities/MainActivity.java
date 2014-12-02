@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.internet.bart.R;
 import com.internet.bart.fragments.AvailableItemsListFragment;
 import com.internet.bart.interfaces.FragmentController;
+import com.parse.ParseUser;
 
 
 public class MainActivity extends Activity implements FragmentController {
@@ -39,8 +40,10 @@ public class MainActivity extends Activity implements FragmentController {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.logout) {
+            ParseUser.getCurrentUser().logOut();
+            System.out.println("should be logged out");
+            System.out.println(ParseUser.getCurrentUser());
         }
         return super.onOptionsItemSelected(item);
     }

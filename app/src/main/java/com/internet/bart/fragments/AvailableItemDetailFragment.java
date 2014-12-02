@@ -12,11 +12,14 @@ import android.widget.TextView;
 import com.internet.bart.R;
 import com.internet.bart.activities.LoginActivity;
 import com.internet.bart.models.AvailableItem;
+import com.parse.ParseUser;
 
 /**
  * Created on 12/1/14.
  */
 public class AvailableItemDetailFragment extends Fragment implements View.OnClickListener {
+
+    private static final int LOGIN_REQUEST = 42;
 
     public static final String ARG_AVAILABLE_ITEM = "arg_available_item";
     private TextView nameTextView, titleTextView, descriptionTextView;
@@ -71,8 +74,11 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
     public void onClick(View view) {
         if (view.getId() == R.id.propose_trade_button) {
             System.out.println("Someone wants to propose a trade");
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
+            System.out.println(ParseUser.getCurrentUser());
+            if (ParseUser.getCurrentUser().getUsername() == null) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivityForResult(intent, LOGIN_REQUEST);
+            }
         }
     }
 }
