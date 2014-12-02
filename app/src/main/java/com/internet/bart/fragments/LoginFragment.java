@@ -2,6 +2,7 @@ package com.internet.bart.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private void loginToParse(String username, String password) {
         try {
             ParseUser.logIn(username, password);
+            
+            Intent intent = new Intent();
+            getActivity().setResult(Activity.RESULT_OK, intent);
+            getActivity().finish();
         } catch (ParseException e) {
             e.printStackTrace();
         }

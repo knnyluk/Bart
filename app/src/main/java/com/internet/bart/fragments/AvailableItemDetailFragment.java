@@ -1,5 +1,6 @@
 package com.internet.bart.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,6 +79,16 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
             if (ParseUser.getCurrentUser().getUsername() == null) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivityForResult(intent, LOGIN_REQUEST);
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOGIN_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+
             }
         }
     }
