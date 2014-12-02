@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.internet.bart.R;
+import com.internet.bart.fragments.AvailableItemsListFragment;
+import com.internet.bart.fragments.LoginFragment;
 import com.internet.bart.interfaces.FragmentController;
 
 /**
@@ -17,6 +19,12 @@ public class LoginActivity extends Activity implements FragmentController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        LoginFragment loginFragment = new LoginFragment();
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragmentcontainer, loginFragment)
+                    .commit();
+        }
     }
 
     @Override
