@@ -54,7 +54,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private void loginToParse(String username, String password) {
         try {
             ParseUser.logIn(username, password);
-            
+
             Intent intent = new Intent();
             getActivity().setResult(Activity.RESULT_OK, intent);
             getActivity().finish();

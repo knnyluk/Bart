@@ -79,6 +79,8 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
             if (ParseUser.getCurrentUser().getUsername() == null) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivityForResult(intent, LOGIN_REQUEST);
+            } else {
+                System.out.println("already logged in");
             }
         }
     }
@@ -88,7 +90,7 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-
+                System.out.println("Login successful");
             }
         }
     }
