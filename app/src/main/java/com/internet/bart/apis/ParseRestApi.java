@@ -44,8 +44,8 @@ public class ParseRestApi {
         new LoadDataInBackground(parseApiCallback).execute(getAvailableItemsUri());
     }
 
-    public void getOwnedItems(ParseApiCallback parseApiCallback) {
-        new LoadDataInBackground(parseApiCallback).execute(getUsersItemsUri());
+    public void getOwnedItems(String ownerUserId, ParseApiCallback parseApiCallback) {
+        new LoadDataInBackground(parseApiCallback).execute(getUsersItemsUri(ownerUserId));
     }
 
     private String getJSONStringFromUri(Uri uri) throws IOException, JSONException {
@@ -77,19 +77,16 @@ public class ParseRestApi {
                 .appendPath(OWNED_ITEM_CLASSNAME)
                 .appendQueryParameter("order", "-createdAt")
                 .build();
-
-        System.out.println(getUsersItemsUri());
-
         return uri;
     }
 
-    private Uri getUsersItemsUri() {
+    private Uri getUsersItemsUri(String ownerUserId) {
         JSONObject ownerQueryParameter = new JSONObject();
         try {
             JSONObject innerJsonObject = new JSONObject();
             innerJsonObject.put("__type", "Pointer");
             innerJsonObject.put("className", "_User");
-            innerJsonObject.put("objectId", "SSgrt5knzi");
+            innerJsonObject.put("objectId", ownerUserId);
 
             ownerQueryParameter.put("owner", innerJsonObject);
         } catch (JSONException e) {

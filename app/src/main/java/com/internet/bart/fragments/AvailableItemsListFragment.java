@@ -24,8 +24,7 @@ public class AvailableItemsListFragment extends ListFragment implements ParseApi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        ParseRestApi.getParseRestApi().getAvailableItems(this);
-        ParseRestApi.getParseRestApi().getOwnedItems(this);
+        ParseRestApi.getParseRestApi().getAvailableItems(this);
         availableItemsAdapter = new AvailableItemsAdapter(getActivity());
         setListAdapter(availableItemsAdapter);
     }
