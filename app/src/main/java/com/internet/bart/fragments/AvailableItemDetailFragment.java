@@ -74,13 +74,11 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.propose_trade_button) {
-            System.out.println("Someone wants to propose a trade");
-            System.out.println(ParseUser.getCurrentUser());
             if (ParseUser.getCurrentUser().getUsername() == null) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivityForResult(intent, LOGIN_REQUEST);
             } else {
-                System.out.println("already logged in");
+//                System.out.println("already logged in");
             }
         }
     }
@@ -90,7 +88,7 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("Login successful");
+//                System.out.println("Login successful");
             }
         }
     }

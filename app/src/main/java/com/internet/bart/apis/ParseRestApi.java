@@ -44,6 +44,10 @@ public class ParseRestApi {
         new LoadDataInBackground(parseApiCallback).execute(getAvailableItemsUri());
     }
 
+    public void getOwnedItems(ParseApiCallback parseApiCallback) {
+        new LoadDataInBackground(parseApiCallback).execute(getUsersItemsUri());
+    }
+
     private String getJSONStringFromUri(Uri uri) throws IOException, JSONException {
         URLConnection httpUrlConnection = new URL(uri.toString()).openConnection();
         httpUrlConnection.setRequestProperty(APPLICATION_ID_HEADER_KEY, APPLICATION_ID);
@@ -72,6 +76,33 @@ public class ParseRestApi {
                 .appendPath(CLASSES_PATH)
                 .appendPath(OWNED_ITEM_CLASSNAME)
                 .appendQueryParameter("order", "-createdAt")
+                .build();
+
+        System.out.println(getUsersItemsUri());
+
+        return uri;
+    }
+
+    private Uri getUsersItemsUri() {
+        JSONObject ownerQueryParameter = new JSONObject();
+        try {
+            JSONObject innerJsonObject = new JSONObject();
+            innerJsonObject.put("__type", "Pointer");
+            innerJsonObject.put("className", "_User");
+            innerJsonObject.put("objectId", "SSgrt5knzi");
+
+            ownerQueryParameter.put("owner", innerJsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Uri uri = new Uri.Builder()
+                .scheme("https")
+                .authority(ROOT_URL)
+                .appendPath(API_VERSION)
+                .appendPath(CLASSES_PATH)
+                .appendPath(OWNED_ITEM_CLASSNAME)
+                .appendQueryParameter("where", ownerQueryParameter.toString())
                 .build();
         return uri;
     }
