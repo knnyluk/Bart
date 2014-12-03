@@ -10,7 +10,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.security.acl.Owner;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public class AvailableItem implements Parcelable {
     private String objectId, name, title, fullDescription;
-    private Owner owner;
+    private com.internet.bart.models.Owner owner;
 //    private Date createdAt, updatedAt;
 
     public static List<AvailableItem> fromJSONString(String jsonString) {
@@ -59,12 +58,13 @@ public class AvailableItem implements Parcelable {
 //        return owner;
 //    }
 
-//    public String toString() {
-//        if (getOwner() != null) {
-//            return getOwner().toString();
-//        }
-//        return null;
-//    }
+    public String toString() {
+        return getOwnerId();
+    }
+
+    public AvailableItem() {
+    }
+
 
     @Override
     public int describeContents() {
@@ -77,9 +77,7 @@ public class AvailableItem implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.title);
         dest.writeString(this.fullDescription);
-    }
-
-    public AvailableItem() {
+        dest.writeParcelable(this.owner, flags);
     }
 
     private AvailableItem(Parcel in) {
@@ -87,6 +85,7 @@ public class AvailableItem implements Parcelable {
         this.name = in.readString();
         this.title = in.readString();
         this.fullDescription = in.readString();
+        this.owner = in.readParcelable(Owner.class.getClassLoader());
     }
 
     public static final Creator<AvailableItem> CREATOR = new Creator<AvailableItem>() {
@@ -98,16 +97,4 @@ public class AvailableItem implements Parcelable {
             return new AvailableItem[size];
         }
     };
-
-    public class Owner {
-        String objectId;
-
-        public String getObjectId() {
-            return objectId;
-        }
-
-//        public String toString() {
-//            return getObjectId();
-//        }
-    }
 }
