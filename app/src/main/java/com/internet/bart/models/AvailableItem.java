@@ -17,7 +17,7 @@ import java.util.List;
  * Created on 11/28/14.
  */
 public class AvailableItem implements Parcelable {
-    private String objectId, name, title, fullDescription, ownerId;
+    private String objectId, name, title, fullDescription;
     private Owner owner;
 //    private Date createdAt, updatedAt;
 
@@ -51,18 +51,20 @@ public class AvailableItem implements Parcelable {
         return fullDescription;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public String getOwnerId() {
+        return owner.getObjectId();
     }
 
-    public String toString() {
-        if (getOwner() != null) {
-            return getOwner().toString();
-        }
-        return null;
-    }
+//    public Owner getOwner() {
+//        return owner;
+//    }
 
-
+//    public String toString() {
+//        if (getOwner() != null) {
+//            return getOwner().toString();
+//        }
+//        return null;
+//    }
 
     @Override
     public int describeContents() {
@@ -104,8 +106,8 @@ public class AvailableItem implements Parcelable {
             return objectId;
         }
 
-        public String toString() {
-            return getObjectId();
-        }
+//        public String toString() {
+//            return getObjectId();
+//        }
     }
 }
