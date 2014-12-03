@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.internet.bart.R;
 import com.internet.bart.activities.LoginActivity;
+import com.internet.bart.activities.TradeProposalActivity;
 import com.internet.bart.models.AvailableItem;
 import com.parse.ParseUser;
 
@@ -78,7 +79,9 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivityForResult(intent, LOGIN_REQUEST);
             } else {
-//                System.out.println("already logged in");
+                System.out.println("already logged in");
+                Intent intent = new Intent(getActivity(), TradeProposalActivity.class);
+                startActivity(intent);
             }
         }
     }
@@ -88,7 +91,9 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-//                System.out.println("Login successful");
+                System.out.println("Login successful");
+                Intent intent = new Intent(getActivity(), TradeProposalActivity.class);
+                startActivity(intent);
             }
         }
     }
