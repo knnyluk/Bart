@@ -23,11 +23,11 @@ public class OfferTradeListFragment extends ListFragment implements ParseApiCall
 
     public static OfferTradeListFragment newInstance(AvailableItem availableItem) {
 
-        Bundle args = new Bundle();
-        args.putParcelable(AvailableItem.ITEM_TO_TRADE_FOR, availableItem);
+//        Bundle args = new Bundle();
+//        args.putParcelable(AvailableItem.ITEM_TO_TRADE_FOR, availableItem);
 
         OfferTradeListFragment offerTradeFragment = new OfferTradeListFragment();
-        offerTradeFragment.setArguments(args);
+        offerTradeFragment.itemToTradeFor = availableItem;
 
         return offerTradeFragment;
     }
@@ -38,9 +38,6 @@ public class OfferTradeListFragment extends ListFragment implements ParseApiCall
         ParseRestApi.getParseRestApi().getOwnedItems(ParseUser.getCurrentUser().getObjectId(), this);
         ownedAvailableItemsAdapter = new AvailableItemsAdapter(getActivity());
         setListAdapter(ownedAvailableItemsAdapter);
-
-//        itemToTradeFor = getArguments().getParcelable(AvailableItem.ITEM_TO_TRADE_FOR);
-//        System.out.println(itemToTradeFor);
     }
 
     @Override

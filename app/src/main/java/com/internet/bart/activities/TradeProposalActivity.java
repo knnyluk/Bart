@@ -19,7 +19,7 @@ public class TradeProposalActivity extends Activity {
         Bundle bundle = getIntent().getExtras();
         AvailableItem currentItem = bundle.getParcelable(AvailableItem.ITEM_TO_TRADE_FOR);
 
-        OfferTradeListFragment offerTradeListFragment = new OfferTradeListFragment();
+        OfferTradeListFragment offerTradeListFragment = OfferTradeListFragment.newInstance(currentItem);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentcontainer, offerTradeListFragment)
