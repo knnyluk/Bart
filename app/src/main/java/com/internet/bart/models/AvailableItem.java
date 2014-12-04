@@ -20,7 +20,7 @@ public class AvailableItem implements Parcelable {
     public static final String ITEM_TO_TRADE_FOR = "item_to_trade_for";
 
     private String objectId, name, title, fullDescription;
-    private com.internet.bart.models.Owner owner;
+    private User owner;
 //    private Date createdAt, updatedAt;
 
     public static List<AvailableItem> fromJSONString(String jsonString) {
@@ -30,9 +30,7 @@ public class AvailableItem implements Parcelable {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
 
-
         System.out.println(gson.fromJson(jsonArrayOfAvailableItems,listType));
-
 
         return gson.fromJson(jsonArrayOfAvailableItems,listType);
     }
@@ -62,6 +60,9 @@ public class AvailableItem implements Parcelable {
 //    }
 
     public String toString() {
+        System.out.println(getName());
+        System.out.println();
+
         return getOwnerId();
     }
 
@@ -88,7 +89,7 @@ public class AvailableItem implements Parcelable {
         this.name = in.readString();
         this.title = in.readString();
         this.fullDescription = in.readString();
-        this.owner = in.readParcelable(Owner.class.getClassLoader());
+        this.owner = in.readParcelable(User.class.getClassLoader());
     }
 
     public static final Creator<AvailableItem> CREATOR = new Creator<AvailableItem>() {

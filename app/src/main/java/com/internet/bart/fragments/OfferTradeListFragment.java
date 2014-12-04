@@ -10,6 +10,8 @@ import com.internet.bart.adapters.AvailableItemsAdapter;
 import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
 import com.internet.bart.models.AvailableItem;
+import com.internet.bart.models.TradeProposal;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -44,6 +46,20 @@ public class OfferTradeListFragment extends ListFragment implements ParseApiCall
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
+        TradeProposal tradeProposal = new TradeProposal();
+        tradeProposal.setSoughtItemId(itemToTradeFor.getObjectId());
+        System.out.println("the object we want to trade for is");
+        System.out.println(tradeProposal.getSoughtItemId());
+        System.out.println("aka " + itemToTradeFor.getName());
+        System.out.println("which is owned by " + itemToTradeFor.getOwnerId());
+        System.out.println("and we are offering" + ownedAvailableItemsAdapter.getItem(position).getName());
+
+        ParseObject parseTradeProposal = new ParseObject("TradeProposal");
+        parseTradeProposal.put("soughtItem", ParseObject.createWithoutData("OwnedItem", tradeProposal.getSoughtItemId()));
+        parseTradeProposal.put("sender", ParseUser.getCurrentUser());
+        parseTradeProposal.put("offeredItem", ParseObject.createWithoutData("OwnedItem", ownedAvailableItemsAdapter.getItem(position).getObjectId()));
+        parseTradeProposal.put("recipient", ParseObject.createWithoutData("_User", itemToTradeFor.getOwnerId()));
+        parseTradeProposal.saveInBackground();
     }
 
     @Override

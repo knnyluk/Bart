@@ -6,10 +6,10 @@ import android.os.Parcelable;
 /**
  * Created on 12/3/14.
  */
-public class Owner implements Parcelable {
-    String objectId;
+public class User implements Parcelable {
+    String objectId, username;
 
-    public Owner() {
+    public User() {
     }
 
     public String getObjectId() {
@@ -30,17 +30,17 @@ public class Owner implements Parcelable {
         dest.writeString(this.objectId);
     }
 
-    private Owner(Parcel in) {
+    private User(Parcel in) {
         this.objectId = in.readString();
     }
 
-    public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
-        public Owner createFromParcel(Parcel source) {
-            return new Owner(source);
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel source) {
+            return new User(source);
         }
 
-        public Owner[] newArray(int size) {
-            return new Owner[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
 }
