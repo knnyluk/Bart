@@ -3,6 +3,7 @@ package com.internet.bart.fragments;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.internet.bart.adapters.AvailableItemsAdapter;
@@ -18,6 +19,18 @@ import java.util.List;
  */
 public class OfferTradeListFragment extends ListFragment implements ParseApiCallback {
     private AvailableItemsAdapter ownedAvailableItemsAdapter;
+    private AvailableItem itemToTradeFor;
+
+    public static OfferTradeListFragment newInstance(AvailableItem availableItem) {
+
+        Bundle args = new Bundle();
+        args.putParcelable(AvailableItem.ITEM_TO_TRADE_FOR, availableItem);
+
+        OfferTradeListFragment offerTradeFragment = new OfferTradeListFragment();
+        offerTradeFragment.setArguments(args);
+
+        return offerTradeFragment;
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -26,17 +39,20 @@ public class OfferTradeListFragment extends ListFragment implements ParseApiCall
         ownedAvailableItemsAdapter = new AvailableItemsAdapter(getActivity());
         setListAdapter(ownedAvailableItemsAdapter);
 
+//        itemToTradeFor = getArguments().getParcelable(AvailableItem.ITEM_TO_TRADE_FOR);
+//        System.out.println(itemToTradeFor);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
     }
 
     @Override
     public void onSuccess(String response) {
         if (isAdded()) {
             List<AvailableItem> availableItemList = AvailableItem.fromJSONString(response);
-
-            for (AvailableItem availableItem: availableItemList ) {
-                System.out.println(availableItem);
-            }
-
             ownedAvailableItemsAdapter.addAll(availableItemList);
             ownedAvailableItemsAdapter.notifyDataSetChanged();
         }

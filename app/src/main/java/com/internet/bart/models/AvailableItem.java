@@ -16,6 +16,9 @@ import java.util.List;
  * Created on 11/28/14.
  */
 public class AvailableItem implements Parcelable {
+
+    public static final String ITEM_TO_TRADE_FOR = "item_to_trade_for";
+
     private String objectId, name, title, fullDescription;
     private com.internet.bart.models.Owner owner;
 //    private Date createdAt, updatedAt;

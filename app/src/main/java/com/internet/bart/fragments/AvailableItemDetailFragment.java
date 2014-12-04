@@ -24,6 +24,7 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
     private static final int LOGIN_REQUEST = 42;
 
     public static final String ARG_AVAILABLE_ITEM = "arg_available_item";
+    AvailableItem currentAvailableItem;
     private TextView nameTextView, titleTextView, descriptionTextView;
 
     public static AvailableItemDetailFragment newInstance(AvailableItem availableItem) {
@@ -54,16 +55,16 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AvailableItem clickedAvailableItem = getArguments().getParcelable(ARG_AVAILABLE_ITEM);
+        currentAvailableItem = getArguments().getParcelable(ARG_AVAILABLE_ITEM);
 
         Button proposeTradeButton = (Button) getActivity().findViewById(R.id.propose_trade_button);
         proposeTradeButton.setOnClickListener(this);
 
-        if (clickedAvailableItem != null) {
+        if (currentAvailableItem != null) {
 
-            nameTextView.setText(clickedAvailableItem.getName());
-            titleTextView.setText(clickedAvailableItem.getTitle());
-            descriptionTextView.setText(clickedAvailableItem.getFullDescription());
+            nameTextView.setText(currentAvailableItem.getName());
+            titleTextView.setText(currentAvailableItem.getTitle());
+            descriptionTextView.setText(currentAvailableItem.getFullDescription());
 
         } else {
             throw new IllegalStateException("Must supply a AvailableItem to AvailableItemDetailFragment");
@@ -81,6 +82,7 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
             } else {
                 System.out.println("already logged in");
                 Intent intent = new Intent(getActivity(), TradeProposalActivity.class);
+                intent.putExtra(AvailableItem.ITEM_TO_TRADE_FOR, currentAvailableItem);
                 startActivity(intent);
             }
         }
