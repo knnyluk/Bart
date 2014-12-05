@@ -11,7 +11,10 @@ import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
 import com.internet.bart.models.AvailableItem;
 import com.internet.bart.models.TradeProposal;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -57,6 +60,15 @@ public class OfferTradeListFragment extends ListFragment implements ParseApiCall
         TradeProposal.writeToParse(itemToTradeFor.getOwnerId(),
                                    itemToTradeFor.getObjectId(),
                                    ownedAvailableItemsAdapter.getItem(position).getObjectId());
+
+        ParseQuery pushQuery = ParseInstallation.getQuery();
+        pushQuery.whereEqualTo("user", ParseObject.createWithoutData("_User", itemToTradeFor.getOwnerId()));
+
+// Send push notification to query
+        ParsePush push = new ParsePush();
+        push.setQuery(pushQuery); // Set our Installation query
+        push.setMessage("You were offered " + ownedAvailableItemsAdapter.getItem(position).getName() + " for your " + itemToTradeFor.getName());
+        push.sendInBackground();
 
 //        ParseObject parseTradeProposal = new ParseObject("TradeProposal");
 //        parseTradeProposal.put("soughtItem", ParseObject.createWithoutData("OwnedItem", tradeProposal.getSoughtItemId()));

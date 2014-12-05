@@ -42,7 +42,8 @@ public class BartApp extends Application {
             }
         });
 
-        ParseInstallation.getCurrentInstallation().put("user", ParseUser.getCurrentUser());
-
+        if (ParseUser.getCurrentUser().getUsername() != null) {
+            ParseInstallation.getCurrentInstallation().put("user", ParseUser.getCurrentUser());
+        }
     }
 }
