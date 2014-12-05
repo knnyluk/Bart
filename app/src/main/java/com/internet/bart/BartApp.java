@@ -6,6 +6,7 @@ import android.util.Log;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -40,6 +41,8 @@ public class BartApp extends Application {
                 }
             }
         });
+
+        ParseInstallation.getCurrentInstallation().put("user", ParseUser.getCurrentUser());
 
     }
 }
