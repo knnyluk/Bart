@@ -27,10 +27,6 @@ public class OfferTradeListFragment extends ListFragment implements ParseApiCall
     private AvailableItem itemToTradeFor;
 
     public static OfferTradeListFragment newInstance(AvailableItem availableItem) {
-
-//        Bundle args = new Bundle();
-//        args.putParcelable(AvailableItem.ITEM_TO_TRADE_FOR, availableItem);
-
         OfferTradeListFragment offerTradeFragment = new OfferTradeListFragment();
         offerTradeFragment.itemToTradeFor = availableItem;
 
@@ -49,33 +45,16 @@ public class OfferTradeListFragment extends ListFragment implements ParseApiCall
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-//        TradeProposal tradeProposal = new TradeProposal();
-//        tradeProposal.setSoughtItemId(itemToTradeFor.getObjectId());
-//        System.out.println("the object we want to trade for is");
-//        System.out.println(tradeProposal.getSoughtItemId());
-//        System.out.println("aka " + itemToTradeFor.getName());
-//        System.out.println("which is owned by " + itemToTradeFor.getOwnerId());
-//        System.out.println("and we are offering" + ownedAvailableItemsAdapter.getItem(position).getName());
-
         TradeProposal.writeToParse(itemToTradeFor.getOwnerId(),
                                    itemToTradeFor.getObjectId(),
                                    ownedAvailableItemsAdapter.getItem(position).getObjectId());
 
         ParseQuery pushQuery = ParseInstallation.getQuery();
         pushQuery.whereEqualTo("user", ParseObject.createWithoutData("_User", itemToTradeFor.getOwnerId()));
-
-// Send push notification to query
         ParsePush push = new ParsePush();
         push.setQuery(pushQuery); // Set our Installation query
         push.setMessage("You were offered " + ownedAvailableItemsAdapter.getItem(position).getName() + " for your " + itemToTradeFor.getName());
         push.sendInBackground();
-
-//        ParseObject parseTradeProposal = new ParseObject("TradeProposal");
-//        parseTradeProposal.put("soughtItem", ParseObject.createWithoutData("OwnedItem", tradeProposal.getSoughtItemId()));
-//        parseTradeProposal.put("sender", ParseUser.getCurrentUser());
-//        parseTradeProposal.put("offeredItem", ParseObject.createWithoutData("OwnedItem", ownedAvailableItemsAdapter.getItem(position).getObjectId()));
-//        parseTradeProposal.put("recipient", ParseObject.createWithoutData("_User", itemToTradeFor.getOwnerId()));
-//        parseTradeProposal.saveInBackground();
     }
 
     @Override
