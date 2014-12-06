@@ -32,6 +32,7 @@ public class AvailableItemsListFragment extends ListFragment implements ParseApi
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
         if (getActivity() instanceof FragmentController) {
 
             AvailableItem availableItem = (AvailableItem) l.getAdapter().getItem(position);
@@ -49,11 +50,6 @@ public class AvailableItemsListFragment extends ListFragment implements ParseApi
     public void onSuccess(String response) {
         if (isAdded()) {
             List<AvailableItem> availableItemList = AvailableItem.fromJSONString(response);
-
-            for (AvailableItem availableItem: availableItemList ) {
-                System.out.println(availableItem);
-            }
-
             availableItemsAdapter.addAll(availableItemList);
             availableItemsAdapter.notifyDataSetChanged();
         }

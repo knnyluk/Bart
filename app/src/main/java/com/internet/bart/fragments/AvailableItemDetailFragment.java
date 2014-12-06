@@ -48,7 +48,6 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
         descriptionTextView = (TextView) view.findViewById(R.id.available_item_description);
 
         return view;
-
     }
 
     @Override
@@ -72,7 +71,6 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
 
     }
 
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.propose_trade_button) {
@@ -92,7 +90,6 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("Login successful");
                 Intent intent = new Intent(getActivity(), TradeProposalActivity.class);
                 intent.putExtra(AvailableItem.ITEM_TO_TRADE_FOR, currentAvailableItem);
                 startActivity(intent);
