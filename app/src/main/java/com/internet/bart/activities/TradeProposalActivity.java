@@ -14,10 +14,9 @@ public class TradeProposalActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trade_proposal);
+        setContentView(R.layout.activity_frame_layout_fragholder);
 
-        Bundle bundle = getIntent().getExtras();
-        AvailableItem currentItem = bundle.getParcelable(AvailableItem.ITEM_TO_TRADE_FOR);
+        AvailableItem currentItem = getIntent().getExtras().getParcelable(AvailableItem.ITEM_TO_TRADE_FOR);
 
         OfferTradeListFragment offerTradeListFragment = OfferTradeListFragment.newInstance(currentItem);
         if (savedInstanceState == null) {

@@ -3,6 +3,7 @@ package com.internet.bart.activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +19,7 @@ public class MainActivity extends Activity implements FragmentController {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_frame_layout_fragholder);
         AvailableItemsListFragment availableItemsListFragment = new AvailableItemsListFragment();
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -42,8 +43,11 @@ public class MainActivity extends Activity implements FragmentController {
         switch (item.getItemId()) {
             case R.id.logout:
                 ParseUser.getCurrentUser().logOut();
+                break;
             case R.id.add_owned_item:
                 System.out.println("user wants to add an item");
+                Intent intent = new Intent(this, CreateAvailableItemActivity.class);
+                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

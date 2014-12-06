@@ -9,4 +9,8 @@
     <string name="prompt_username">username</string>
     <string name="prompt_password">password</string>
     <string name="login_button_text">login</string>
+
+    <string name="hint_item_name">e.g. Canon EOS 5D MK III </string>
+    <string name="hint_item_title">e.g. Used full-frame dslr</string>
+    <string name="button_create_available_item_text">Create Listing</string>
 </resources>
