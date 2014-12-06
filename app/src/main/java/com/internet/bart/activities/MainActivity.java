@@ -39,11 +39,11 @@ public class MainActivity extends Activity implements FragmentController {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.logout) {
-            ParseUser.getCurrentUser().logOut();
-            System.out.println("should be logged out");
-            System.out.println(ParseUser.getCurrentUser());
+        switch (item.getItemId()) {
+            case R.id.logout:
+                ParseUser.getCurrentUser().logOut();
+            case R.id.add_owned_item:
+                System.out.println("user wants to add an item");
         }
         return super.onOptionsItemSelected(item);
     }
