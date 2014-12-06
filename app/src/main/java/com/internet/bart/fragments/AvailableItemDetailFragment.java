@@ -80,7 +80,6 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivityForResult(intent, LOGIN_REQUEST);
             } else {
-                System.out.println("already logged in");
                 Intent intent = new Intent(getActivity(), TradeProposalActivity.class);
                 intent.putExtra(AvailableItem.ITEM_TO_TRADE_FOR, currentAvailableItem);
                 startActivity(intent);
@@ -95,6 +94,7 @@ public class AvailableItemDetailFragment extends Fragment implements View.OnClic
             if (resultCode == Activity.RESULT_OK) {
                 System.out.println("Login successful");
                 Intent intent = new Intent(getActivity(), TradeProposalActivity.class);
+                intent.putExtra(AvailableItem.ITEM_TO_TRADE_FOR, currentAvailableItem);
                 startActivity(intent);
             }
         }
