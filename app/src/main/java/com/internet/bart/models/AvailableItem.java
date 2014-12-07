@@ -23,6 +23,8 @@ public class AvailableItem implements Parcelable {
     public static final String ITEM_TO_TRADE_FOR = "item_to_trade_for";
     private String objectId, name, title, fullDescription;
     private User owner;
+    private Photo thumbnailPhoto;
+
 
     public static List<AvailableItem> fromJSONString(String jsonString) {
         JsonParser parser = new JsonParser();
@@ -30,6 +32,11 @@ public class AvailableItem implements Parcelable {
         JsonArray jsonArrayOfAvailableItems = rawJsonObject.getAsJsonArray("results");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
+
+
+        System.out.println(gson.fromJson(jsonArrayOfAvailableItems,listType));
+
+
         return gson.fromJson(jsonArrayOfAvailableItems,listType);
     }
 
@@ -41,6 +48,9 @@ public class AvailableItem implements Parcelable {
         availableItem.put("owner", ParseUser.getCurrentUser());
         availableItem.put("thumbnailPhoto", thumbnail);
         availableItem.saveInBackground();
+    }
+
+    public AvailableItem() {
     }
 
     public String getObjectId() {
@@ -55,6 +65,14 @@ public class AvailableItem implements Parcelable {
         return title;
     }
 
+    public String getThumbnailUrl() {
+        if (thumbnailPhoto != null) {
+            return thumbnailPhoto.getUrl();
+        } else {
+            return "";
+        }
+    }
+
     public String getFullDescription() {
         return fullDescription;
     }
@@ -64,15 +82,10 @@ public class AvailableItem implements Parcelable {
     }
 
     public String toString() {
-        System.out.println(getName());
-        System.out.println();
-
-        return getOwnerId();
+        return getThumbnailUrl();
     }
 
-    public AvailableItem() {
-    }
-    
+
     @Override
     public int describeContents() {
         return 0;
@@ -84,7 +97,8 @@ public class AvailableItem implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.title);
         dest.writeString(this.fullDescription);
-        dest.writeParcelable(this.owner, flags);
+        dest.writeParcelable(this.owner, 0);
+        dest.writeParcelable(this.thumbnailPhoto, 0);
     }
 
     private AvailableItem(Parcel in) {
@@ -93,6 +107,7 @@ public class AvailableItem implements Parcelable {
         this.title = in.readString();
         this.fullDescription = in.readString();
         this.owner = in.readParcelable(User.class.getClassLoader());
+        this.thumbnailPhoto = in.readParcelable(Photo.class.getClassLoader());
     }
 
     public static final Creator<AvailableItem> CREATOR = new Creator<AvailableItem>() {
@@ -104,6 +119,4 @@ public class AvailableItem implements Parcelable {
             return new AvailableItem[size];
         }
     };
-
-
 }
