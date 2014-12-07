@@ -13,6 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.internet.bart.R;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created on 12/5/14.
@@ -20,7 +24,6 @@ import com.internet.bart.R;
 public class CreateAvailableItemFragment extends Fragment implements View.OnClickListener {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private Button addPhotoButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,8 +36,16 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        addPhotoButton = (Button) getActivity().findViewById(R.id.add_photo_button);
+
+        Activity hostingActivity = getActivity();
+
+        Button addPhotoButton = (Button) hostingActivity.findViewById(R.id.add_photo_button);
         addPhotoButton.setOnClickListener(this);
+
+        Button createListingButton = (Button) hostingActivity.findViewById(R.id.create_available_item_button);
+        createListingButton.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -46,7 +57,8 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
                 break;
-            
+            case R.id.create_available_item_button:
+
         }
     }
 
@@ -58,6 +70,17 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ImageView previewImageView = (ImageView) getActivity().findViewById(R.id.preview_image_view);
             previewImageView.setImageBitmap(imageBitmap);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            ParseFile thumbnail = new ParseFile("thumbnail.jpg", byteArray);
+
+            ParseObject availableItem = new ParseObject("OwnedItem");
+            availableItem.put("name", "test item create item activity");
+            availableItem.put("thumbnailPhoto", thumbnail);
+            availableItem.saveInBackground();
         }
     }
 }

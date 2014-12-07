@@ -45,7 +45,6 @@ public class MainActivity extends Activity implements FragmentController {
                 ParseUser.getCurrentUser().logOut();
                 break;
             case R.id.add_owned_item:
-                System.out.println("user wants to add an item");
                 Intent intent = new Intent(this, CreateAvailableItemActivity.class);
                 startActivity(intent);
         }
