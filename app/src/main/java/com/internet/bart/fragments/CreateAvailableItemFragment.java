@@ -28,6 +28,7 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
 
     private View rootView;
     private Bitmap thumbnailImage;
+    private Button addPhotoButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button addPhotoButton = (Button) rootView.findViewById(R.id.add_photo_button);
+        addPhotoButton = (Button) rootView.findViewById(R.id.add_photo_button);
         addPhotoButton.setOnClickListener(this);
 
         Button createListingButton = (Button) rootView.findViewById(R.id.create_available_item_button);
@@ -71,6 +72,7 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
             thumbnailImage = (Bitmap) extras.get("data");
             ImageView previewImageView = (ImageView) rootView.findViewById(R.id.preview_image_view);
             previewImageView.setImageBitmap(thumbnailImage);
+            addPhotoButton.setText("retake photo");
         }
     }
 
