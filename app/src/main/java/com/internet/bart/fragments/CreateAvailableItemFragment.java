@@ -14,9 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.internet.bart.R;
+import com.internet.bart.models.AvailableItem;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 
@@ -59,8 +58,8 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
                 }
                 break;
             case R.id.create_available_item_button:
-                saveItemToParse();
-
+                saveItemToParse(packageImage(thumbnailImage));
+                getActivity().finish();
         }
     }
 
@@ -70,30 +69,20 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
             thumbnailImage = (Bitmap) extras.get("data");
-            ImageView previewImageView = (ImageView) getActivity().findViewById(R.id.preview_image_view);
+            ImageView previewImageView = (ImageView) rootView.findViewById(R.id.preview_image_view);
             previewImageView.setImageBitmap(thumbnailImage);
         }
     }
 
-    private void saveItemToParse() {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        thumbnailImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-
-        ParseFile thumbnail = new ParseFile("thumbnail.jpg", byteArray);
-
+    private void saveItemToParse(ParseFile thumbnail) {
         EditText newItemNameEditText = (EditText) rootView.findViewById(R.id.name_new_available_item_edit_text);
         EditText newItemTitleEditText = (EditText) rootView.findViewById(R.id.title_new_available_item_edit_text);
         EditText newItemFullDescriptionEditText = (EditText) rootView.findViewById(R.id.full_description_new_available_item_edit_text);
 
-
-        ParseObject availableItem = new ParseObject("OwnedItem");
-        availableItem.put("name", newItemNameEditText.getText().toString());
-        availableItem.put("title", newItemTitleEditText.getText().toString());
-        availableItem.put("fullDescription", newItemFullDescriptionEditText.getText().toString());
-        availableItem.put("owner", ParseUser.getCurrentUser());
-        availableItem.put("thumbnailPhoto", thumbnail);
-        availableItem.saveInBackground();
+        AvailableItem.writeToParse(newItemNameEditText.getText().toString(),
+                                   newItemTitleEditText.getText().toString(),
+                                   newItemFullDescriptionEditText.getText().toString(),
+                                   thumbnail);
     }
 
     private ParseFile packageImage (Bitmap bitmap) {

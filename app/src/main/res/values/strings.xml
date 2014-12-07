@@ -10,7 +10,11 @@
     <string name="prompt_password">password</string>
     <string name="login_button_text">login</string>
 
+    <string name="label_item_name">Item name</string>
     <string name="hint_item_name">e.g. Canon EOS 5D MK III </string>
+    <string name="label_item_condition">Condition</string>
     <string name="hint_item_title">e.g. Used full-frame dslr</string>
+    <string name="label_item_full_description">Full description</string>
+    <string name="hint_item_full_description">Describe this item as much as you want, but it\'s not so much fun to type it out on a phone\'s keyboard</string>
     <string name="button_create_available_item_text">Create Listing</string>
 </resources>

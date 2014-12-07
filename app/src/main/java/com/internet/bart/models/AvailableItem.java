@@ -8,6 +8,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -33,6 +36,16 @@ public class AvailableItem implements Parcelable {
         System.out.println(gson.fromJson(jsonArrayOfAvailableItems,listType));
 
         return gson.fromJson(jsonArrayOfAvailableItems,listType);
+    }
+
+    public static void writeToParse(String itemName, String itemTitle, String itemFullDescription, ParseFile thumbnail) {
+        ParseObject availableItem = new ParseObject("OwnedItem");
+        availableItem.put("name", itemName);
+        availableItem.put("title", itemTitle);
+        availableItem.put("fullDescription", itemFullDescription);
+        availableItem.put("owner", ParseUser.getCurrentUser());
+        availableItem.put("thumbnailPhoto", thumbnail);
+        availableItem.saveInBackground();
     }
 
     public String getObjectId() {
@@ -101,4 +114,6 @@ public class AvailableItem implements Parcelable {
             return new AvailableItem[size];
         }
     };
+
+
 }
