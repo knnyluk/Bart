@@ -21,10 +21,8 @@ import java.util.List;
 public class AvailableItem implements Parcelable {
 
     public static final String ITEM_TO_TRADE_FOR = "item_to_trade_for";
-
     private String objectId, name, title, fullDescription;
     private User owner;
-//    private Date createdAt, updatedAt;
 
     public static List<AvailableItem> fromJSONString(String jsonString) {
         JsonParser parser = new JsonParser();
@@ -32,9 +30,6 @@ public class AvailableItem implements Parcelable {
         JsonArray jsonArrayOfAvailableItems = rawJsonObject.getAsJsonArray("results");
         Gson gson = new Gson();
         Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
-
-        System.out.println(gson.fromJson(jsonArrayOfAvailableItems,listType));
-
         return gson.fromJson(jsonArrayOfAvailableItems,listType);
     }
 
@@ -68,10 +63,6 @@ public class AvailableItem implements Parcelable {
         return owner.getObjectId();
     }
 
-//    public Owner getOwner() {
-//        return owner;
-//    }
-
     public String toString() {
         System.out.println(getName());
         System.out.println();
@@ -81,8 +72,7 @@ public class AvailableItem implements Parcelable {
 
     public AvailableItem() {
     }
-
-
+    
     @Override
     public int describeContents() {
         return 0;

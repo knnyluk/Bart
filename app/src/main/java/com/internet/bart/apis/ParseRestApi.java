@@ -36,7 +36,6 @@ public class ParseRestApi {
         if (parseRestApi == null) {
             parseRestApi = new ParseRestApi();
         }
-
         return parseRestApi;
     }
 
