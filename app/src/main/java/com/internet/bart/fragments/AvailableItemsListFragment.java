@@ -55,6 +55,7 @@ public class AvailableItemsListFragment extends ListFragment implements ParseApi
     public void onSuccess(String response) {
         if (isAdded()) {
             List<AvailableItem> availableItemList = AvailableItem.fromJSONString(response);
+            availableItemsAdapter.clear();
             availableItemsAdapter.addAll(availableItemList);
             availableItemsAdapter.notifyDataSetChanged();
         }

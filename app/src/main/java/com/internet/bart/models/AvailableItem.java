@@ -34,7 +34,7 @@ public class AvailableItem implements Parcelable {
         Type listType = new TypeToken<List<AvailableItem>>(){}.getType();
 
 
-        System.out.println(gson.fromJson(jsonArrayOfAvailableItems,listType));
+//        System.out.println(gson.fromJson(jsonArrayOfAvailableItems,listType));
 
 
         return gson.fromJson(jsonArrayOfAvailableItems,listType);
@@ -66,7 +66,7 @@ public class AvailableItem implements Parcelable {
     }
 
     public String getThumbnailUrl() {
-        if (thumbnailPhoto != null) {
+        if (hasImage()) {
             return thumbnailPhoto.getUrl();
         } else {
             return "";
@@ -81,10 +81,17 @@ public class AvailableItem implements Parcelable {
         return owner.getObjectId();
     }
 
-    public String toString() {
-        return getThumbnailUrl();
+    public boolean hasImage() {
+        if (thumbnailPhoto != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
+//    public String toString() {
+//        return getThumbnailUrl();
+//    }
 
     @Override
     public int describeContents() {

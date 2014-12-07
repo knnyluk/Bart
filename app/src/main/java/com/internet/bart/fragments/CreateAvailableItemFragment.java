@@ -72,6 +72,7 @@ public class CreateAvailableItemFragment extends Fragment implements View.OnClic
             thumbnailImage = (Bitmap) extras.get("data");
             ImageView previewImageView = (ImageView) rootView.findViewById(R.id.preview_image_view);
             previewImageView.setImageBitmap(thumbnailImage);
+
             addPhotoButton.setText("retake photo");
         }
     }
