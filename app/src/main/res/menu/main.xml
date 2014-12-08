@@ -5,6 +5,7 @@
           android:title="Add item"
           android:showAsAction="always" />
     <item
+          android:id="@+id/see_trades"
           android:title="Trades"
           android:showAsAction="always" />
     <item android:id="@+id/action_settings"

@@ -45,8 +45,12 @@ public class MainActivity extends Activity implements FragmentController {
                 ParseUser.getCurrentUser().logOut();
                 break;
             case R.id.add_owned_item:
-                Intent intent = new Intent(this, CreateAvailableItemActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, CreateAvailableItemActivity.class));
+                break;
+            case R.id.see_trades:
+                startActivity(new Intent(this, TradeOffersActivity.class));
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
