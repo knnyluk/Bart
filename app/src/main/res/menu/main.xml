@@ -3,7 +3,9 @@
     tools:context=".MainActivity" >
     <item android:id="@+id/add_owned_item"
           android:title="Add item"
-          android:icon="@drawable/ic_launcher"
+          android:showAsAction="always" />
+    <item
+          android:title="Trades"
           android:showAsAction="always" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
