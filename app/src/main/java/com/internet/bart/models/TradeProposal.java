@@ -19,6 +19,10 @@ public class TradeProposal {
     private User sender, recipient;
     private AvailableItem offeredItem, soughtItem;
 
+    public AvailableItem getOfferedItem() {
+        return offeredItem;
+    }
+
     public static List<TradeProposal> fromJSONString(String jsonString) {
         JsonParser parser = new JsonParser();
         JsonObject rawJsonObject = (JsonObject)parser.parse(jsonString);
