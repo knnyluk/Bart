@@ -32,7 +32,11 @@ public class TradeProposal {
         return soughtItem;
     }
 
-    public String getStatus() {
+    public int getStatus() {
+        return status;
+    }
+
+    public String getStatusText() {
         switch (status) {
             case STATUS_REJECTED:
                 return "Rejected";

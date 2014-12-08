@@ -1,6 +1,8 @@
 package com.internet.bart.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,17 @@ public class TradeProposalAdapter extends ArrayAdapter<TradeProposal> {
 
         viewHolder.offeredItemTextView.setText(tradeProposal.getOfferedItem().getName());
         viewHolder.soughtItemTextView.setText(tradeProposal.getSoughtItem().getName());
-        viewHolder.tradeStatusTextView.setText(tradeProposal.getStatus());
+        viewHolder.tradeStatusTextView.setText(tradeProposal.getStatusText());
+
+        switch (tradeProposal.getStatus()) {
+            case TradeProposal.STATUS_ACCEPTED:
+                viewHolder.tradeStatusTextView.setTextColor(Color.GREEN);
+                break;
+            case TradeProposal.STATUS_REJECTED:
+                viewHolder.tradeStatusTextView.setTextColor(Color.RED);
+                break;
+        }
+
 
         return convertView;
     }
