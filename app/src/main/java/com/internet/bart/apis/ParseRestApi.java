@@ -67,11 +67,15 @@ public class ParseRestApi {
 
     }
 
-    private Uri getAvailableItemsUri() {
-        Uri uri = new Uri.Builder()
+    private Uri.Builder getRootUriBuilder() {
+        return new Uri.Builder()
                 .scheme("https")
                 .authority(ROOT_URL)
-                .appendPath(API_VERSION)
+                .appendPath(API_VERSION);
+    }
+
+    private Uri getAvailableItemsUri() {
+        Uri uri = getRootUriBuilder()
                 .appendPath(CLASSES_PATH)
                 .appendPath(OWNED_ITEM_CLASSNAME)
                 .appendQueryParameter("order", "-createdAt")
