@@ -30,6 +30,7 @@ public class ParseRestApi {
     private static final String API_VERSION = "1";
     private static final String CLASSES_PATH = "classes";
     private static final String OWNED_ITEM_CLASSNAME = "OwnedItem";
+    private static final String TRADE_PROPOSAL_CLASSNAME = "TradeProposal";
 
     private static ParseRestApi parseRestApi;
 
@@ -49,7 +50,7 @@ public class ParseRestApi {
     }
 
     public void getTradesOfferedToUser(String recipientUserId, ParseApiCallback parseApiCallback) {
-//        new LoadDataInBackground(parseApiCallback).execute(get)
+        new LoadDataInBackground(parseApiCallback).execute(getTradesOfferedToUri(recipientUserId));
     }
 
     private String getJSONStringFromUri(Uri uri) throws IOException, JSONException {
@@ -76,12 +77,12 @@ public class ParseRestApi {
         return new Uri.Builder()
                 .scheme("https")
                 .authority(ROOT_URL)
-                .appendPath(API_VERSION);
+                .appendPath(API_VERSION)
+                .appendPath(CLASSES_PATH);
     }
 
     private Uri getAvailableItemsUri() {
         return getRootUriBuilder()
-                .appendPath(CLASSES_PATH)
                 .appendPath(OWNED_ITEM_CLASSNAME)
                 .appendQueryParameter("order", "-createdAt")
                 .build();
@@ -103,30 +104,18 @@ public class ParseRestApi {
     }
 
     private Uri getUsersItemsUri(String ownerUserId) {
-//        JSONObject ownerQueryParameter = new JSONObject();
-//        try {
-//            JSONObject innerJsonObject = new JSONObject();
-//            innerJsonObject.put("__type", "Pointer");
-//            innerJsonObject.put("className", "_User");
-//            innerJsonObject.put("objectId", ownerUserId);
-//
-//            ownerQueryParameter.put("owner", innerJsonObject);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-        String currentUserId = ParseUser.getCurrentUser().getObjectId();
-
         return getRootUriBuilder()
-                .appendPath(CLASSES_PATH)
                 .appendPath(OWNED_ITEM_CLASSNAME)
-                .appendQueryParameter("where", getUserQueryParameter(currentUserId, "owner"))
+                .appendQueryParameter("where", getUserQueryParameter(ownerUserId, "owner"))
                 .build();
     }
 
-//    private Uri getTradesOfferedTo(String recipientUserId) {
-//
-//    }
+    private Uri getTradesOfferedToUri(String recipientUserId) {
+        return getRootUriBuilder()
+                .appendPath(TRADE_PROPOSAL_CLASSNAME)
+                .appendQueryParameter("where", getUserQueryParameter(recipientUserId, "recipient"))
+                .build();
+    }
 
     public class LoadDataInBackground extends AsyncTask<Uri, Void, String> {
 
