@@ -114,6 +114,7 @@ public class ParseRestApi {
         return getRootUriBuilder()
                 .appendPath(TRADE_PROPOSAL_CLASSNAME)
                 .appendQueryParameter("where", getUserQueryParameter(recipientUserId, "recipient"))
+                .appendQueryParameter("include", "offeredItem,soughtItem")
                 .build();
     }
 
