@@ -16,11 +16,33 @@ import java.util.List;
  */
 public class TradeProposal {
 
+    public static final int STATUS_REJECTED = 0;
+    public static final int STATUS_PROPOSED = 1;
+    public static final int STATUS_ACCEPTED = 2;
+
     private User sender, recipient;
     private AvailableItem offeredItem, soughtItem;
+    private int status;
 
     public AvailableItem getOfferedItem() {
         return offeredItem;
+    }
+
+    public AvailableItem getSoughtItem() {
+        return soughtItem;
+    }
+
+    public String getStatus() {
+        switch (status) {
+            case STATUS_REJECTED:
+                return "Rejected";
+            case STATUS_PROPOSED:
+                return "Proposed";
+            case STATUS_ACCEPTED:
+                return "Accepted";
+            default:
+                return "Unknown";
+        }
     }
 
     public static List<TradeProposal> fromJSONString(String jsonString) {

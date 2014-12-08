@@ -37,7 +37,8 @@ public class TradeProposalAdapter extends ArrayAdapter<TradeProposal> {
         TradeProposal tradeProposal = getItem(position);
 
         viewHolder.offeredItemTextView.setText(tradeProposal.getOfferedItem().getName());
-//        viewHolder.itemTitleTextView.setText(tradeProposal.getTitle());
+        viewHolder.soughtItemTextView.setText(tradeProposal.getSoughtItem().getName());
+        viewHolder.tradeStatusTextView.setText(tradeProposal.getStatus());
 
         return convertView;
     }
@@ -45,11 +46,14 @@ public class TradeProposalAdapter extends ArrayAdapter<TradeProposal> {
     private static class ViewHolder {
 
         private TextView offeredItemTextView;
-        private TextView itemTitleTextView;
+        private TextView soughtItemTextView;
+        private TextView tradeStatusTextView;
 
         public ViewHolder(View rootView) {
             this.offeredItemTextView = (TextView) rootView.findViewById(R.id.offered_item_name_text_view);
-//            this.itemTitleTextView = (TextView) rootView.findViewById(R.id.itemTitleTextView);
+            this.soughtItemTextView = (TextView) rootView.findViewById(R.id.sought_item_name_text_view);
+            this.tradeStatusTextView = (TextView) rootView.findViewById(R.id.trade_status_text_view);
+
         }
 
     }
