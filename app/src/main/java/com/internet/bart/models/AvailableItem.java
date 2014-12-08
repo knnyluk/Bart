@@ -89,9 +89,9 @@ public class AvailableItem implements Parcelable {
         }
     }
 
-//    public String toString() {
-//        return getThumbnailUrl();
-//    }
+    public String toString() {
+        return getName();
+    }
 
     @Override
     public int describeContents() {

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
+import com.internet.bart.models.TradeProposal;
 import com.parse.ParseUser;
 
 /**
@@ -28,7 +29,10 @@ public class TradeOffersListFragment extends ListFragment implements ParseApiCal
     @Override
     public void onSuccess(String response) {
         if (isAdded()) {
-            System.out.println(response);
+//            System.out.println(response);
+            System.out.println(TradeProposal.fromJSONString(response));
+
+
 //            List<AvailableItem> availableItemList = AvailableItem.fromJSONString(response);
 //            availableItemsAdapter.clear();
 //            availableItemsAdapter.addAll(availableItemList);

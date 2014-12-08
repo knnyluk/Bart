@@ -20,6 +20,10 @@ public class User implements Parcelable {
 //        return getObjectId();
 //    }
 
+    public String toString() {
+        return getObjectId();
+    }
+
     @Override
     public int describeContents() {
         return 0;
