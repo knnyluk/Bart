@@ -3,6 +3,7 @@ package com.internet.bart.fragments;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.internet.bart.adapters.TradeProposalAdapter;
 import com.internet.bart.apis.ParseRestApi;
@@ -36,8 +37,6 @@ public class TradeOffersListFragment extends ListFragment implements ParseApiCal
     @Override
     public void onSuccess(String response) {
         if (isAdded()) {
-//            System.out.println(TradeProposal.fromJSONString(response));
-
             List<TradeProposal> tradeProposalsList = TradeProposal.fromJSONString(response);
             tradeProposalAdapter.clear();
             tradeProposalAdapter.addAll(tradeProposalsList);
@@ -48,7 +47,7 @@ public class TradeOffersListFragment extends ListFragment implements ParseApiCal
     @Override
     public void onError() {
         if (isAdded()) {
-//            Toast.makeText(getActivity(), "Sorry, there was trouble fetching the available items", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Sorry, there was trouble fetching the trades offered to you", Toast.LENGTH_SHORT).show();
         }
     }
 }
