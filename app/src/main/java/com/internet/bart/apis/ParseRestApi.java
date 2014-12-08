@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.internet.bart.interfaces.ParseApiCallback;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +48,10 @@ public class ParseRestApi {
         new LoadDataInBackground(parseApiCallback).execute(getUsersItemsUri(ownerUserId));
     }
 
+    public void getTradesOfferedToUser(String recipientUserId, ParseApiCallback parseApiCallback) {
+//        new LoadDataInBackground(parseApiCallback).execute(get)
+    }
+
     private String getJSONStringFromUri(Uri uri) throws IOException, JSONException {
         URLConnection httpUrlConnection = new URL(uri.toString()).openConnection();
         httpUrlConnection.setRequestProperty(APPLICATION_ID_HEADER_KEY, APPLICATION_ID);
@@ -75,37 +80,53 @@ public class ParseRestApi {
     }
 
     private Uri getAvailableItemsUri() {
-        Uri uri = getRootUriBuilder()
+        return getRootUriBuilder()
                 .appendPath(CLASSES_PATH)
                 .appendPath(OWNED_ITEM_CLASSNAME)
                 .appendQueryParameter("order", "-createdAt")
                 .build();
-        return uri;
     }
 
-    private Uri getUsersItemsUri(String ownerUserId) {
-        JSONObject ownerQueryParameter = new JSONObject();
+    private String getUserQueryParameter(String ownerUserId, String pointerFieldName) {
+        JSONObject userQueryParameter = new JSONObject();
         try {
             JSONObject innerJsonObject = new JSONObject();
             innerJsonObject.put("__type", "Pointer");
             innerJsonObject.put("className", "_User");
             innerJsonObject.put("objectId", ownerUserId);
 
-            ownerQueryParameter.put("owner", innerJsonObject);
+            userQueryParameter.put(pointerFieldName, innerJsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return userQueryParameter.toString();
+    }
 
-        Uri uri = new Uri.Builder()
-                .scheme("https")
-                .authority(ROOT_URL)
-                .appendPath(API_VERSION)
+    private Uri getUsersItemsUri(String ownerUserId) {
+//        JSONObject ownerQueryParameter = new JSONObject();
+//        try {
+//            JSONObject innerJsonObject = new JSONObject();
+//            innerJsonObject.put("__type", "Pointer");
+//            innerJsonObject.put("className", "_User");
+//            innerJsonObject.put("objectId", ownerUserId);
+//
+//            ownerQueryParameter.put("owner", innerJsonObject);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        String currentUserId = ParseUser.getCurrentUser().getObjectId();
+
+        return getRootUriBuilder()
                 .appendPath(CLASSES_PATH)
                 .appendPath(OWNED_ITEM_CLASSNAME)
-                .appendQueryParameter("where", ownerQueryParameter.toString())
+                .appendQueryParameter("where", getUserQueryParameter(currentUserId, "owner"))
                 .build();
-        return uri;
     }
+
+//    private Uri getTradesOfferedTo(String recipientUserId) {
+//
+//    }
 
     public class LoadDataInBackground extends AsyncTask<Uri, Void, String> {
 
