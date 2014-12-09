@@ -3,6 +3,7 @@ package com.internet.bart.fragments;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 

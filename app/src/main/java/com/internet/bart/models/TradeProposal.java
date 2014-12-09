@@ -77,20 +77,14 @@ public class TradeProposal implements Parcelable {
     public void updateStatus(int statusCode) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TradeProposal");
         final int sC = statusCode;
-        System.out.println(sC);
 
-        query.getInBackground(getObjectId(), new GetCallback<ParseObject>() {
+        query.getInBackground(this.getObjectId(), new GetCallback<ParseObject>() {
             public void done(ParseObject gameScore, ParseException e) {
                 if (e == null) {
                     // Now let's update it with some new data. In this case, only cheatMode and score
                     // will get sent to the Parse Cloud. playerName hasn't changed.
-                    System.out.println(gameScore);
                     gameScore.put("status", sC);
-                    try {
-                        gameScore.save();
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
+                    gameScore.saveInBackground();
                 }
             }
         });

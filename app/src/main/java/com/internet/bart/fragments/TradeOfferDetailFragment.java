@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.internet.bart.R;
@@ -54,11 +55,9 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
         offered_item_text_view.setText(currentTradeProposal.getOfferedItem().getName());
         sought_item_text_view.setText(currentTradeProposal.getSoughtItem().getName());
 
-        Button acceptButton = (Button) view.findViewById(R.id.accept_button);
-        Button rejectButton = (Button) view.findViewById(R.id.reject_button);
-
-        acceptButton.setOnClickListener(this);
-        rejectButton.setOnClickListener(this);
+        if (currentTradeProposal.getStatus() == TradeProposal.STATUS_PROPOSED) {
+            enableButtons(view);
+        }
     }
 
     @Override
@@ -73,5 +72,16 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
                 currentTradeProposal.updateStatus(TradeProposal.STATUS_REJECTED);
                 break;
         }
+    }
+
+    private void enableButtons(View view) {
+        LinearLayout buttonWrapper = (LinearLayout) view.findViewById(R.id.button_container);
+        buttonWrapper.setVisibility(View.VISIBLE);
+
+        Button acceptButton = (Button) view.findViewById(R.id.accept_button);
+        Button rejectButton = (Button) view.findViewById(R.id.reject_button);
+
+        acceptButton.setOnClickListener(this);
+        rejectButton.setOnClickListener(this);
     }
 }
