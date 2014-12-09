@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/offered_item_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Offered item: "
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+    <TextView
+        android:id="@+id/offered_item_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/offered_item_label"
+        />
+    <TextView
+        android:id="@+id/sought_item_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sought item: "
+        android:layout_below="@id/offered_item_label" />
+    <TextView
+        android:id="@+id/sought_item_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/sought_item_label"
+        android:layout_alignTop="@id/sought_item_label"
+        tools:text="test test"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal" >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept trade" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reject trade"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+</RelativeLayout>

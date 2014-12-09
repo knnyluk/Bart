@@ -1,5 +1,8 @@
 package com.internet.bart.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -14,7 +17,7 @@ import java.util.List;
 /**
  * Created on 12/4/14.
  */
-public class TradeProposal {
+public class TradeProposal implements Parcelable {
 
     public static final String[] STATUSES = {"Rejected", "Proposed", "Accepted"};
     public static final int STATUS_REJECTED = 0;
@@ -63,4 +66,38 @@ public class TradeProposal {
         return soughtItem.toString();
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.sender, 0);
+        dest.writeParcelable(this.recipient, 0);
+        dest.writeParcelable(this.offeredItem, 0);
+        dest.writeParcelable(this.soughtItem, 0);
+        dest.writeInt(this.status);
+    }
+
+    public TradeProposal() {
+    }
+
+    private TradeProposal(Parcel in) {
+        this.sender = in.readParcelable(User.class.getClassLoader());
+        this.recipient = in.readParcelable(User.class.getClassLoader());
+        this.offeredItem = in.readParcelable(AvailableItem.class.getClassLoader());
+        this.soughtItem = in.readParcelable(AvailableItem.class.getClassLoader());
+        this.status = in.readInt();
+    }
+
+    public static final Parcelable.Creator<TradeProposal> CREATOR = new Parcelable.Creator<TradeProposal>() {
+        public TradeProposal createFromParcel(Parcel source) {
+            return new TradeProposal(source);
+        }
+
+        public TradeProposal[] newArray(int size) {
+            return new TradeProposal[size];
+        }
+    };
 }
