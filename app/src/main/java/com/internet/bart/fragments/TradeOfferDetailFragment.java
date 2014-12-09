@@ -1,6 +1,7 @@
 package com.internet.bart.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.internet.bart.R;
+import com.internet.bart.activities.ChatActivity;
 import com.internet.bart.models.TradeProposal;
 
 /**
@@ -60,8 +62,7 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
                 enableButtons(view);
                 break;
             case TradeProposal.STATUS_ACCEPTED:
-                Button communicateButton = (Button) view.findViewById(R.id.communicate_button);
-                communicateButton.setVisibility(View.VISIBLE);
+                enableCommunication(view);
         }
     }
 
@@ -76,6 +77,9 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
                 System.out.println("reject button clicked");
                 currentTradeProposal.updateStatus(TradeProposal.STATUS_REJECTED);
                 break;
+            case R.id.communicate_button:
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
         }
     }
 
@@ -88,5 +92,12 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
 
         acceptButton.setOnClickListener(this);
         rejectButton.setOnClickListener(this);
+    }
+
+    private void enableCommunication(View view) {
+        Button communicateButton = (Button) view.findViewById(R.id.communicate_button);
+        communicateButton.setVisibility(View.VISIBLE);
+
+        communicateButton.setOnClickListener(this);
     }
 }

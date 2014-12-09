@@ -47,6 +47,7 @@
         <activity android:name=".activities.TradeProposalActivity"></activity>
         <activity android:name=".activities.CreateAvailableItemActivity"></activity>
         <activity android:name=".activities.TradeOffersActivity"></activity>
+        <activity android:name=".activities.ChatActivity"></activity>
 
         <service android:name="com.parse.PushService" />
             <receiver android:name="com.parse.ParseBroadcastReceiver">
