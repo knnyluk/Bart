@@ -31,6 +31,7 @@ public class ParseRestApi {
     private static final String CLASSES_PATH = "classes";
     private static final String OWNED_ITEM_CLASSNAME = "OwnedItem";
     private static final String TRADE_PROPOSAL_CLASSNAME = "TradeProposal";
+    private static final String CHAT_MESSAGE_CLASSNAME = "ChatMessage";
 
     private static ParseRestApi parseRestApi;
 
@@ -51,6 +52,10 @@ public class ParseRestApi {
 
     public void getTradesOfferedToUser(String recipientUserId, ParseApiCallback parseApiCallback) {
         new LoadDataInBackground(parseApiCallback).execute(getTradesOfferedToUri(recipientUserId));
+    }
+
+    public void getChatMessages(String acceptedTradeId, ParseApiCallback parseApiCallback) {
+        new LoadDataInBackground(parseApiCallback).execute(getChatMessagesUri(acceptedTradeId));
     }
 
     private String getJSONStringFromUri(Uri uri) throws IOException, JSONException {
@@ -115,6 +120,12 @@ public class ParseRestApi {
                 .appendPath(TRADE_PROPOSAL_CLASSNAME)
                 .appendQueryParameter("where", getUserQueryParameter(recipientUserId, "recipient"))
                 .appendQueryParameter("include", "offeredItem,soughtItem")
+                .build();
+    }
+
+    private Uri getChatMessagesUri(String acceptedTradeId) {
+        return getRootUriBuilder()
+                .appendPath(CHAT_MESSAGE_CLASSNAME)
                 .build();
     }
 
