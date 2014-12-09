@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.internet.bart.R;
@@ -13,7 +14,7 @@ import com.internet.bart.models.TradeProposal;
 /**
  * Created on 12/9/14.
  */
-public class TradeOfferDetailFragment extends Fragment {
+public class TradeOfferDetailFragment extends Fragment implements View.OnClickListener {
 
     public static final String ARG_TRADE_PROPOSAL = "arg_trade_proposal";
 
@@ -50,9 +51,25 @@ public class TradeOfferDetailFragment extends Fragment {
 
         currentTradeProposal = getArguments().getParcelable(ARG_TRADE_PROPOSAL);
 
-//        System.out.println(currentTradeProposal);
-
         offered_item_text_view.setText(currentTradeProposal.getOfferedItem().getName());
         sought_item_text_view.setText(currentTradeProposal.getSoughtItem().getName());
+
+        Button acceptButton = (Button) view.findViewById(R.id.accept_button);
+        Button rejectButton = (Button) view.findViewById(R.id.reject_button);
+
+        acceptButton.setOnClickListener(this);
+        rejectButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.accept_button:
+                System.out.println("accept button clicked");
+                break;
+            case R.id.reject_button:
+                System.out.println("reject button clicked");
+                break;
+        }
     }
 }

@@ -42,15 +42,9 @@ public class TradeOffersListFragment extends ListFragment implements ParseApiCal
         super.onListItemClick(l, v, position, id);
 
         if (getActivity() instanceof FragmentController) {
-
             TradeProposal tradeProposal = (TradeProposal) l.getAdapter().getItem(position);
             TradeOfferDetailFragment tradeOfferDetailFragment = TradeOfferDetailFragment.newInstance(tradeProposal);
-//            System.out.println("item " + Integer.toString(position) + " clicked");
 
-
-//            AvailableItem availableItem = (AvailableItem) l.getAdapter().getItem(position);
-//            AvailableItemDetailFragment availableItemDetailFragment = AvailableItemDetailFragment.newInstance(availableItem);
-//
             FragmentController fragmentController = (FragmentController) getActivity();
             fragmentController.changeFragment(tradeOfferDetailFragment, true);
 
