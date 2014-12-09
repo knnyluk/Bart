@@ -55,8 +55,13 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
         offered_item_text_view.setText(currentTradeProposal.getOfferedItem().getName());
         sought_item_text_view.setText(currentTradeProposal.getSoughtItem().getName());
 
-        if (currentTradeProposal.getStatus() == TradeProposal.STATUS_PROPOSED) {
-            enableButtons(view);
+        switch (currentTradeProposal.getStatus()) {
+            case TradeProposal.STATUS_PROPOSED:
+                enableButtons(view);
+                break;
+            case TradeProposal.STATUS_ACCEPTED:
+                Button communicateButton = (Button) view.findViewById(R.id.communicate_button);
+                communicateButton.setVisibility(View.VISIBLE);
         }
     }
 
