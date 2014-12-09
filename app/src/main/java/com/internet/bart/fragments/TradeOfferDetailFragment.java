@@ -66,9 +66,11 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
         switch (view.getId()) {
             case R.id.accept_button:
                 System.out.println("accept button clicked");
+                currentTradeProposal.updateStatus(TradeProposal.STATUS_ACCEPTED);
                 break;
             case R.id.reject_button:
                 System.out.println("reject button clicked");
+                currentTradeProposal.updateStatus(TradeProposal.STATUS_REJECTED);
                 break;
         }
     }

@@ -8,7 +8,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.lang.reflect.Type;
@@ -24,9 +27,14 @@ public class TradeProposal implements Parcelable {
     public static final int STATUS_PROPOSED = 1;
     public static final int STATUS_ACCEPTED = 2;
 
+    private String objectId;
     private User sender, recipient;
     private AvailableItem offeredItem, soughtItem;
     private int status;
+
+    public String getObjectId() {
+        return objectId;
+    }
 
     public AvailableItem getOfferedItem() {
         return offeredItem;
@@ -62,8 +70,30 @@ public class TradeProposal implements Parcelable {
         parseTradeProposal.saveInBackground();
     }
 
-    public String toString() {
-        return soughtItem.toString();
+//    public String toString() {
+//        return soughtItem.toString();
+//    }
+
+    public void updateStatus(int statusCode) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TradeProposal");
+        final int sC = statusCode;
+        System.out.println(sC);
+
+        query.getInBackground(getObjectId(), new GetCallback<ParseObject>() {
+            public void done(ParseObject gameScore, ParseException e) {
+                if (e == null) {
+                    // Now let's update it with some new data. In this case, only cheatMode and score
+                    // will get sent to the Parse Cloud. playerName hasn't changed.
+                    System.out.println(gameScore);
+                    gameScore.put("status", sC);
+                    try {
+                        gameScore.save();
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     @Override
