@@ -34,14 +34,7 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
         }
 
         ChatMessage chatMessage = getItem(position);
-
-//        viewHolder.usernameTextView.setText(chatMessage.getSenderId());
-//        String whitespace = String.format("%-20s", str);
-//        System.out.println(String.format("%-" + Integer.toString(chatMessage.getSenderId().length()) + "s", chatMessage.getText()));
-//        System.out.println("%-" + Integer.toString(chatMessage.getSenderId().length()) + "s");
-//        System.out.println("%-" + Integer.toString(chatMessage.getSenderId().length()) + "s");
-//        System.out.println(String.format("%20s", chatMessage.getText()));
-        viewHolder.chatTextTextView.setText(chatMessage.getText());
+        viewHolder.chatTextTextView.setText(chatMessage.toString());
 
         return convertView;
     }

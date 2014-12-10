@@ -3,6 +3,8 @@ package com.internet.bart.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.parse.ParseUser;
+
 /**
  * Created on 12/3/14.
  */
@@ -10,6 +12,10 @@ public class User implements Parcelable {
     String objectId, username;
 
     public User() {
+    }
+
+    public User(String objectId) {
+        this.objectId = objectId;
     }
 
     public String getObjectId() {
