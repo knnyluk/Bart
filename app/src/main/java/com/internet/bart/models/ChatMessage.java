@@ -61,6 +61,12 @@ public class ChatMessage {
     }
 
     public String toString() {
-        return getSenderId() + ": " + getText();
+        String username;
+        if (getSenderId().equals(ParseUser.getCurrentUser().getObjectId())) {
+            username = "You";
+        } else {
+            username = "user" + Integer.toString(getSenderId().hashCode());
+        }
+        return username + ": " + getText();
     }
 }
