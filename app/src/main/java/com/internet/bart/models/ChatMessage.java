@@ -33,4 +33,8 @@ public class ChatMessage {
     public String getText() {
         return text;
     }
+
+    public String getSenderId() {
+        return sender.getObjectId();
+    }
 }

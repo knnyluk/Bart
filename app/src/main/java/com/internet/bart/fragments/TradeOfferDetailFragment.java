@@ -79,6 +79,7 @@ public class TradeOfferDetailFragment extends Fragment implements View.OnClickLi
                 break;
             case R.id.communicate_button:
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra(TradeProposal.TRADE_PROPOSAL_KEY, currentTradeProposal.getObjectId());
                 startActivity(intent);
         }
     }

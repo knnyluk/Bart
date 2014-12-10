@@ -108,6 +108,21 @@ public class ParseRestApi {
         return userQueryParameter.toString();
     }
 
+    private String getTradeQueryParameter(String acceptedTradeId, String pointerFieldName) {
+        JSONObject acceptedTradeQueryParam = new JSONObject();
+        try {
+            JSONObject innerJsonObject = new JSONObject();
+            innerJsonObject.put("__type", "Pointer");
+            innerJsonObject.put("className", "TradeProposal");
+            innerJsonObject.put("objectId", acceptedTradeId);
+
+            acceptedTradeQueryParam.put(pointerFieldName, innerJsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return acceptedTradeQueryParam.toString();
+    }
+
     private Uri getUsersItemsUri(String ownerUserId) {
         return getRootUriBuilder()
                 .appendPath(OWNED_ITEM_CLASSNAME)
@@ -126,6 +141,7 @@ public class ParseRestApi {
     private Uri getChatMessagesUri(String acceptedTradeId) {
         return getRootUriBuilder()
                 .appendPath(CHAT_MESSAGE_CLASSNAME)
+                .appendQueryParameter("where", getTradeQueryParameter(acceptedTradeId, "acceptedTrade"))
                 .build();
     }
 

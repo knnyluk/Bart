@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.internet.bart.R;
-import com.internet.bart.models.AvailableItem;
 import com.internet.bart.models.ChatMessage;
 
 /**
@@ -36,8 +35,13 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 
         ChatMessage chatMessage = getItem(position);
 
+//        viewHolder.usernameTextView.setText(chatMessage.getSenderId());
+//        String whitespace = String.format("%-20s", str);
+//        System.out.println(String.format("%-" + Integer.toString(chatMessage.getSenderId().length()) + "s", chatMessage.getText()));
+//        System.out.println("%-" + Integer.toString(chatMessage.getSenderId().length()) + "s");
+//        System.out.println("%-" + Integer.toString(chatMessage.getSenderId().length()) + "s");
+//        System.out.println(String.format("%20s", chatMessage.getText()));
         viewHolder.chatTextTextView.setText(chatMessage.getText());
-//        viewHolder.itemTitleTextView.setText(chatMessage.getTitle());
 
         return convertView;
     }
@@ -45,11 +49,11 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
     private static class ViewHolder {
 
         private TextView chatTextTextView;
-//        private TextView itemTitleTextView;
+//        private TextView usernameTextView;
 
         public ViewHolder(View rootView) {
             this.chatTextTextView = (TextView) rootView.findViewById(R.id.chat_text_text_view);
-//            this.itemTitleTextView = (TextView) rootView.findViewById(R.id.itemTitleTextView);
+//            this.usernameTextView = (TextView) rootView.findViewById(R.id.username_text_view);
         }
 
     }

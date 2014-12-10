@@ -5,17 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.internet.bart.R;
-import com.internet.bart.adapters.AvailableItemsAdapter;
 import com.internet.bart.adapters.ChatMessageAdapter;
 import com.internet.bart.apis.ParseRestApi;
 import com.internet.bart.interfaces.ParseApiCallback;
-import com.internet.bart.models.AvailableItem;
 import com.internet.bart.models.ChatMessage;
+import com.internet.bart.models.TradeProposal;
 
 import java.util.List;
 
@@ -26,11 +23,14 @@ public class ChatFragment extends Fragment implements ParseApiCallback {
 
     private ChatMessageAdapter chatMessageAdapter;
     private ListView chatMessageListView;
+    private String tradeId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_chat, container ,false);
+
+        tradeId = getActivity().getIntent().getStringExtra(TradeProposal.TRADE_PROPOSAL_KEY);
 
         return view;
     }
@@ -41,7 +41,7 @@ public class ChatFragment extends Fragment implements ParseApiCallback {
         chatMessageAdapter = new ChatMessageAdapter(getActivity());
         chatMessageListView = (ListView) getActivity().findViewById(R.id.message_list_view);
         chatMessageListView.setAdapter(chatMessageAdapter);
-        ParseRestApi.getParseRestApi().getChatMessages("test", this);
+        ParseRestApi.getParseRestApi().getChatMessages(tradeId, this);
     }
 
     @Override

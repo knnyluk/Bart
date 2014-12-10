@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class TradeProposal implements Parcelable {
 
+    public static final String TRADE_PROPOSAL_KEY = "trade_proposal_key";
     public static final String[] STATUSES = {"Rejected", "Proposed", "Accepted"};
     public static final int STATUS_REJECTED = 0;
     public static final int STATUS_PROPOSED = 1;
