@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.internet.bart.R;
@@ -19,10 +21,11 @@ import java.util.List;
 /**
  * Created on 12/9/14.
  */
-public class ChatFragment extends Fragment implements ParseApiCallback {
+public class ChatFragment extends Fragment implements View.OnClickListener, ParseApiCallback {
 
     private ChatMessageAdapter chatMessageAdapter;
     private ListView chatMessageListView;
+    private EditText textEditText;
     private String tradeId;
 
     @Override
@@ -33,6 +36,29 @@ public class ChatFragment extends Fragment implements ParseApiCallback {
         tradeId = getActivity().getIntent().getStringExtra(TradeProposal.TRADE_PROPOSAL_KEY);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        textEditText = (EditText) view.findViewById(R.id.new_message_edit_text);
+        Button sendButton = (Button) view.findViewById(R.id.send_button);
+        sendButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.send_button:
+//                System.out.println("send button clicked");
+                String text = textEditText.getText().toString();
+                ChatMessage newMessage = new ChatMessage(text);
+                chatMessageAdapter.add(newMessage);
+                chatMessageAdapter.notifyDataSetChanged();
+                textEditText.setText("");
+                newMessage.writeToParse(tradeId);
+        }
     }
 
     @Override

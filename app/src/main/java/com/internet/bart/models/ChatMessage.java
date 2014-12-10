@@ -47,8 +47,9 @@ public class ChatMessage {
     public void writeToParse(String tradeId) {
         ParseObject chatMessage = new ParseObject("ChatMessage");
         chatMessage.put("sender", ParseUser.getCurrentUser());
-        chatMessage.put("acceptedTrade", tradeId);
+        chatMessage.put("acceptedTrade", ParseObject.createWithoutData("TradeProposal", tradeId));
         chatMessage.put("text", text);
+        chatMessage.saveInBackground();
     }
 
     public String getText() {
